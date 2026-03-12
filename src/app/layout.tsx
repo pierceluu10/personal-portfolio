@@ -1,16 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Geist } from "next/font/google";
+import { GeistSans } from "geist/font/sans";
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { cn } from "@/lib/utils";
-
-const geist = Geist({subsets:['latin'],variable:'--font-sans'});
-
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Your Name Here | Portfolio",
-  description: "Personal portfolio",
+  title: "pierce luu | portfolio",
+  description: "personal portfolio",
 };
 
 export default function RootLayout({
@@ -19,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning className={cn("font-sans", geist.variable)}>
+    <html lang="en" suppressHydrationWarning className={`${GeistSans.className} bg-[#f7f4ed] dark:bg-[#28282B]`}>
       <head>
         <script
           dangerouslySetInnerHTML={{
@@ -27,10 +21,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body
-        className={`${inter.className} min-h-screen bg-white text-slate-900 antialiased dark:bg-slate-950 dark:text-slate-100`}
-      >
-        <Header />
+      <body className="min-h-screen overflow-x-hidden bg-[#f7f4ed] text-slate-900 text-sm antialiased dark:bg-[#28282B] dark:text-slate-100">
         {children}
       </body>
     </html>

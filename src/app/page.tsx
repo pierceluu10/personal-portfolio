@@ -1,18 +1,20 @@
 import { IntroSection } from "@/components/IntroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { CurrentWorkSection } from "@/components/CurrentWorkSection";
-import { FeaturedProjectsSection } from "@/components/FeaturedProjectsSection";
+import { ProjectsSection } from "@/components/ProjectsSection";
+import { StackSection } from "@/components/StackSection";
 
 export default function HomePage() {
   return (
-    <main>
-      <div className="mx-auto max-w-2xl px-6 py-12 md:px-8 md:py-16">
+    <main className="min-h-screen overflow-x-hidden bg-[#f7f4ed] dark:bg-[#28282B]">
+      <div className="mx-auto min-w-0 max-w-2xl bg-[#f7f4ed] px-6 py-10 dark:bg-[#28282B] md:px-8 md:py-12">
         <IntroSection />
-        <FeaturedProjectsSection />
-        <div className="mt-16">
+        <StackSection />
+        <ProjectsSection />
+        <div className="mt-10">
           <AboutSection />
         </div>
-        <div className="mt-16">
+        <div className="mt-10">
           <CurrentWorkSection />
         </div>
       </div>

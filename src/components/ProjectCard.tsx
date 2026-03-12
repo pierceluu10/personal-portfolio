@@ -1,88 +1,117 @@
 "use client";
 
-import { ExternalLink, Github } from "lucide-react";
+import { Github } from "lucide-react";
 import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { ProjectTechBadge } from "./ProjectTechBadge";
+import type { Project } from "@/data/projects";
 
 interface ProjectCardProps {
-  title: string;
-  description: string;
-  url: string;
-  github?: string;
-  date?: string;
-  tech?: string[];
+  project: Project;
+  suppressHoverIcons?: boolean;
+  onClick: (e: React.MouseEvent) => void;
 }
 
 function formatDate(dateStr: string) {
   try {
-    const d = new Date(dateStr);
-    return d.toLocaleDateString("en-US", { month: "short", year: "numeric" });
+    const [y, m, d] = dateStr.split("-").map(Number);
+    const date = new Date(y, (m || 1) - 1, d || 1);
+    return date.toLocaleDateString("en-US", { month: "short", year: "numeric" });
   } catch {
     return dateStr;
   }
 }
 
-export function ProjectCard({
-  title,
-  description,
-  url,
-  github,
-  date,
-  tech = [],
-}: ProjectCardProps) {
+function ArrowUpRightIcon({ className }: { className?: string }) {
   return (
-    <a
-      href={url}
-      target="_blank"
-      rel="noreferrer"
-      className="block rounded-lg transition-opacity hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-slate-950"
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      className={className}
+      aria-hidden
     >
-      <Card className="flex h-full min-w-0 flex-col">
-        <CardHeader className="pb-2">
-          <CardTitle className="flex items-center gap-2">
-            {title}
-            <ExternalLink className="h-4 w-4 shrink-0 text-slate-500" />
-          </CardTitle>
-          {date && (
-            <CardDescription className="text-xs">{formatDate(date)}</CardDescription>
+      <path d="M7 7h10v10" />
+      <path d="M7 17 17 7" />
+    </svg>
+  );
+}
+
+export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCardProps) {
+  const { title, description, github, date, tech = [], url } = project;
+
+  return (
+    <div className="w-full">
+      <button
+        type="button"
+        onClick={onClick}
+        className="group/project w-full text-left focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
+      >
+        <Card className="relative h-full min-w-0 border-2 border-[#d3d3d3] bg-[#FAF6F0] shadow-lg ring-0 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:hover:bg-[#2a2a2a]">
+          {/* Hover overlay icons - top right, only visible on card hover */}
+          <div
+            className="pointer-events-none absolute right-4 top-4 flex items-center gap-1.5"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a
+              href={url}
+              target="_blank"
+              rel="noreferrer"
+              className={`pointer-events-auto rounded p-1 text-slate-600 transition-opacity group-hover/project:text-slate-900 dark:text-gray-mid dark:group-hover/project:text-white ${suppressHoverIcons ? "opacity-0" : "opacity-0 group-hover/project:opacity-100"}`}
+            >
+              <ArrowUpRightIcon className="h-3 w-3" />
+            </a>
+            {github && (
+              <a
+                href={github}
+                target="_blank"
+                rel="noreferrer"
+                className={`pointer-events-auto rounded p-1 text-slate-600 transition-opacity group-hover/project:text-slate-900 dark:text-gray-mid dark:group-hover/project:text-white ${suppressHoverIcons ? "opacity-0" : "opacity-0 group-hover/project:opacity-100"}`}
+              >
+                <Github className="h-3 w-3" />
+              </a>
+            )}
+          </div>
+
+          <CardHeader className="pb-1 pr-16">
+            <CardTitle className="text-sm font-semibold lowercase text-slate-900 dark:text-white">
+              {title.toLowerCase()}
+            </CardTitle>
+            {date && (
+              <CardDescription className="text-xs text-slate-500 dark:text-gray-mid dark:transition-colors dark:group-hover/project:text-white">
+              {formatDate(date)}
+            </CardDescription>
           )}
         </CardHeader>
-        <CardContent className="flex-1">
-          <p className="text-sm text-slate-600 dark:text-slate-400">{description}</p>
+        <CardContent className="flex-1 pt-0">
+          <p className="break-words text-xs lowercase text-slate-600 dark:text-gray-mid dark:transition-colors dark:group-hover/project:text-white">
+            {description}
+          </p>
           {tech.length > 0 && (
-            <div className="mt-3 flex flex-wrap gap-1.5">
+            <div className="mt-2 flex flex-wrap gap-2">
               {tech.map((t) => (
-                <span
+                <ProjectTechBadge
                   key={t}
-                  className="rounded-md bg-slate-200 px-2 py-0.5 text-xs text-slate-600 dark:bg-slate-800 dark:text-slate-400"
-                >
-                  {t}
-                </span>
+                  name={t}
+                  className="border-2 border-[#d3d3d3] bg-[#FAF6F0] text-slate-600 dark:border-[#3A3A3A] dark:bg-[#333333] dark:text-gray-mid dark:transition-colors dark:group-hover/project:text-white"
+                />
               ))}
             </div>
           )}
         </CardContent>
-        <CardFooter className="flex gap-2 pt-0">
-          {github && (
-            <a
-              href={github}
-              target="_blank"
-              rel="noreferrer"
-              onClick={(e) => e.stopPropagation()}
-              className="flex items-center gap-1 text-sm text-slate-600 hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100"
-            >
-              <Github className="h-4 w-4" />
-              Source
-            </a>
-          )}
-        </CardFooter>
-      </Card>
-    </a>
+        </Card>
+      </button>
+    </div>
   );
 }

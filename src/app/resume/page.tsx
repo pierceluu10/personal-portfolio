@@ -2,17 +2,17 @@ import { PageContainer } from "@/components/PageContainer";
 
 export default function ResumePage() {
   return (
-    <main className="pt-16">
+    <main className="min-h-screen bg-[#f7f4ed] pt-16 dark:bg-[#28282B]">
       <PageContainer>
-        <h1 className="mb-4 text-3xl font-bold tracking-tight text-slate-100">
-          Resume
+        <h1 className="mb-4 text-2xl font-bold lowercase tracking-tight text-slate-900 dark:text-white">
+          resume
         </h1>
-        <p className="text-slate-400">
-          My resume will go here. Add a link to{" "}
-          <code className="rounded bg-slate-800 px-1.5 py-0.5 text-sm">
+        <p className="text-sm lowercase text-slate-600 dark:text-white">
+          my resume will go here. add a link to{" "}
+          <code className="rounded bg-slate-200 px-1.5 py-0.5 text-sm dark:bg-slate-800">
             /resume.pdf
           </code>{" "}
-          in <code className="rounded bg-slate-800 px-1.5 py-0.5 text-sm">public/</code> or
+          in <code className="rounded bg-slate-200 px-1.5 py-0.5 text-sm dark:bg-slate-800">public/</code> or
           embed it.
         </p>
       </PageContainer>
