@@ -1,7 +1,9 @@
 # personal-portfolio
 
 my personal portfolio
+
 it's still a wip
+
 https://pierceluu.vercel.app/
 
 ## Structure
