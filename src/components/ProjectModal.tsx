@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { motion } from "motion/react";
 import { X, Github, ExternalLink } from "lucide-react";
 import { ProjectTechBadge } from "./ProjectTechBadge";
+import { formatProjectDate } from "@/lib/utils";
 import type { Project } from "@/data/projects";
 
 interface ProjectModalProps {
@@ -78,8 +79,8 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
           </button>
 
           <div className="mb-4 flex flex-wrap items-center gap-3 pr-10">
-            <h2 className="text-xl font-bold lowercase text-slate-900 dark:text-white md:text-2xl">
-              {project.title.toLowerCase()}
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white md:text-2xl">
+              {project.title}
             </h2>
             <div className="flex items-center gap-2">
               {project.github && (
@@ -87,7 +88,7 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
                   href={project.github}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm lowercase text-[#343434] transition-colors hover:bg-[#ebe4dc] hover:text-slate-900 dark:text-gray-mid dark:hover:bg-[#363636] dark:hover:text-slate-100"
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-[#343434] transition-colors hover:bg-[#ebe4dc] hover:text-slate-900 dark:text-gray-mid dark:hover:bg-[#363636] dark:hover:text-slate-100"
                 >
                   <Github className="h-4 w-4" />
                   github
@@ -98,7 +99,7 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
                   href={project.url}
                   target="_blank"
                   rel="noreferrer"
-                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm lowercase text-[#343434] transition-colors hover:bg-[#ebe4dc] hover:text-slate-900 dark:text-gray-mid dark:hover:bg-[#363636] dark:hover:text-slate-100"
+                  className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm text-[#343434] transition-colors hover:bg-[#ebe4dc] hover:text-slate-900 dark:text-gray-mid dark:hover:bg-[#363636] dark:hover:text-slate-100"
                 >
                   <ExternalLink className="h-4 w-4" />
                   live
@@ -108,16 +109,12 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
           </div>
 
           {project.date && (
-            <p className="mb-4 text-xs lowercase text-slate-600 dark:text-gray-mid">
-              {new Date(project.date).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
+            <p className="mb-4 text-xs text-slate-600 dark:text-gray-mid">
+              {formatProjectDate(project.date)}
             </p>
           )}
 
-          <p className="mb-6 text-sm lowercase leading-relaxed text-slate-600 dark:text-gray-mid">
+          <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-gray-mid">
             {description}
           </p>
 

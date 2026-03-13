@@ -1,10 +1,14 @@
 import type { Metadata } from "next";
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
+import { NekoCat } from "@/components/NekoCat";
 
 export const metadata: Metadata = {
   title: "pierce luu | portfolio",
   description: "personal portfolio",
+  icons: {
+    icon: "/favicon.png",
+  },
 };
 
 export default function RootLayout({
@@ -23,6 +27,7 @@ export default function RootLayout({
       </head>
       <body className="min-h-screen overflow-x-hidden bg-[#f7f4ed] text-slate-900 text-sm antialiased dark:bg-[#28282B] dark:text-slate-100">
         {children}
+        <NekoCat />
       </body>
     </html>
   );

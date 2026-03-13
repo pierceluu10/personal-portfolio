@@ -8,9 +8,9 @@ interface ProjectTechBadgeProps {
 export function ProjectTechBadge({ name, className = "" }: ProjectTechBadgeProps) {
   return (
     <span
-      className={`inline-flex items-center rounded-lg border-2 border-[#d3d3d3] bg-white/5 px-2.5 py-1 text-xs lowercase text-gray-mid dark:border-[#3A3A3A] ${className}`}
+      className={`inline-flex items-center rounded-lg border-2 border-[#d3d3d3] bg-white/5 px-2.5 py-1 text-xs text-gray-mid dark:border-[#3A3A3A] ${className}`}
     >
-      {name.toLowerCase()}
+      {name}
     </span>
   );
 }

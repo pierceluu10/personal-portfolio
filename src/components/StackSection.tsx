@@ -25,9 +25,9 @@ const techItems: { name: string; icon: React.ComponentType<{ size?: string | num
 
 export function StackSection() {
   return (
-    <section className="group mt-10 space-y-3">
-      <h2 className="text-base font-semibold lowercase text-slate-900 dark:text-white">
-        technologies im strongest with
+    <section className="group mt-5 space-y-3">
+      <h2 className="text-base font-semibold text-slate-900 dark:text-white">
+        technologies i&apos;m strongest with
       </h2>
       <div className="flex flex-wrap gap-2">
         {techItems.map(({ name, icon: Icon }) => (
@@ -51,7 +51,7 @@ export function StackSection() {
                 </>
               )}
             </span>
-            <span className="lowercase">{name}</span>
+            <span>{name}</span>
           </motion.div>
         ))}
       </div>

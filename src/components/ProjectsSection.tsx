@@ -29,8 +29,8 @@ export function ProjectsSection({ limit = 3 }: { limit?: number }) {
 
   return (
     <>
-      <section className="mt-10 space-y-3">
-        <h2 className="text-base font-semibold lowercase text-slate-900 dark:text-white">
+      <section className="mt-5 space-y-3">
+        <h2 className="text-base font-semibold text-slate-900 dark:text-white">
           recent projects
         </h2>
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">

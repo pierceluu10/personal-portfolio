@@ -4,21 +4,18 @@ import { ThemeToggle } from "./ThemeToggle";
 export function IntroSection() {
   return (
     <section className="group/intro space-y-3">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
-        <div className="space-y-3">
-          <h1 className="text-xl font-bold lowercase tracking-tight text-slate-900 dark:text-white sm:text-2xl">
-            hi, i&apos;m pierce luu
+      <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
+        <div className="min-w-0 flex-1 space-y-3">
+          <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
+            hi! i&apos;m pierce luu
           </h1>
-          <ul className="list-inside list-disc space-y-0.5 text-sm lowercase text-slate-600 dark:text-gray-mid dark:transition-colors group-hover/intro:dark:text-white">
-            <li>placeholder bullet: what you do</li>
-            <li>placeholder bullet: another thing you do</li>
-            <li>placeholder bullet: third point</li>
+          <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
+            <li>i&apos;m a first-year computer engineering student @ uoft</li>
+            <li>i&apos;m currently wrapping up my internship as an ai-integration and back-end developer for ontario online schools through riipen&apos;s level up program</li>
+            <li>i&apos;m building agentic AI systems and applied machine learning projects</li>
           </ul>
-          <p className="text-sm lowercase text-slate-600 dark:text-gray-mid dark:transition-colors group-hover/intro:dark:text-white">
-            i&apos;m open to new opportunities. short line of text you can edit later.
-          </p>
         </div>
-        <div className="flex items-center gap-2 sm:flex-col sm:items-end">
+        <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end">
           <div className="flex items-center gap-1">
             <a
               href="https://github.com/pierceluu10"

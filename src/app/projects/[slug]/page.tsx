@@ -2,6 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { projects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
+import { formatProjectDate } from "@/lib/utils";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -62,11 +63,7 @@ export default function ProjectPage({
 
           {project.date && (
             <p className="mb-4 text-sm text-slate-500">
-              {new Date(project.date).toLocaleDateString("en-US", {
-                month: "long",
-                day: "numeric",
-                year: "numeric",
-              })}
+              {formatProjectDate(project.date)}
             </p>
           )}
 
