@@ -10,13 +10,13 @@ https://pierceluu.vercel.app/
 
 ```
 app/
-  layout.tsx          # Root layout, Header
-  page.tsx            # Home (horizontal scroll)
+  layout.tsx    
+  page.tsx           
   globals.css
   projects/
-    page.tsx          # All projects
+    page.tsx 
   resume/
-    page.tsx          # Resume placeholder
+    page.tsx
 
 src/
   components/
@@ -26,12 +26,12 @@ src/
     CurrentWorkSection.tsx
     FeaturedProjectsSection.tsx
     ProjectCard.tsx
-    ProjectScroller.tsx   # Horizontal scroller (slows when holding)
+    ProjectScroller.tsx
     PageContainer.tsx
     Section.tsx
     ui/
       button.tsx
       card.tsx
   data/
-    projects.ts       # Placeholder projects array
+    projects.ts
 ```
