@@ -15,7 +15,7 @@ export function formatProjectDate(
     return date.toLocaleDateString("en-US", {
       month: style === "short" ? "short" : "long",
       year: "numeric",
-    });
+    }).toLowerCase();
   } catch {
     return dateStr;
   }

@@ -94,7 +94,7 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
                   github
                 </a>
               )}
-              {project.slug === "finco" && (
+              {project.url && project.url !== project.github && (
                 <a
                   href={project.url}
                   target="_blank"

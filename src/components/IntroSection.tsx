@@ -11,8 +11,8 @@ export function IntroSection() {
           </h1>
           <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
             <li>i&apos;m a first-year computer engineering student @ uoft</li>
-            <li>i&apos;m currently wrapping up my internship as an ai-integration and back-end developer for ontario online schools through riipen&apos;s level up program</li>
-            <li>i&apos;m building agentic AI systems and applied machine learning projects</li>
+            <li>i just wrapped up my internship as a back-end developer for ontario online schools through riipen&apos;s level up program</li>
+            <li>i&apos;m learning more about system design and mlops infrastructure</li>
           </ul>
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end">

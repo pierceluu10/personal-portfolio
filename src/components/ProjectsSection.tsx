@@ -1,17 +1,19 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { AnimatePresence } from "motion/react";
+import { ArrowRight } from "lucide-react";
 import { ProjectCard } from "./ProjectCard";
 import { ProjectModal } from "./ProjectModal";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 
-export function ProjectsSection({ limit = 3 }: { limit?: number }) {
+export function ProjectsSection({ limit }: { limit?: number }) {
   const [openProject, setOpenProject] = useState<Project | null>(null);
   const [origin, setOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
   const [isScrolling, setIsScrolling] = useState(false);
-  const featured = projects.slice(0, limit);
+  const featured = limit !== undefined ? projects.slice(0, limit) : projects;
 
   useEffect(() => {
     let scrollTimeout: ReturnType<typeof setTimeout>;
@@ -30,9 +32,20 @@ export function ProjectsSection({ limit = 3 }: { limit?: number }) {
   return (
     <>
       <section className="mt-5 space-y-3">
-        <h2 className="text-base font-semibold text-slate-900 dark:text-white">
-          recent projects
-        </h2>
+        <div className="flex items-center justify-between">
+          <h2 className="text-base font-semibold text-slate-900 dark:text-white">
+            {limit !== undefined ? "recent projects" : "projects"}
+          </h2>
+          {limit !== undefined && limit < projects.length && (
+            <Link
+              href="/projects"
+              className="flex items-center gap-1 text-xs text-slate-500 transition-colors hover:text-slate-900 dark:text-gray-mid dark:hover:text-white"
+            >
+              all projects
+              <ArrowRight className="h-3 w-3" />
+            </Link>
+          )}
+        </div>
         <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {featured.map((p) => (
             <div key={p.slug} className="min-w-0">
