@@ -12,7 +12,9 @@ export default function HomePage() {
           <AboutSection />
         </div>
         <StackSection />
-        <ProjectsSection limit={3} />
+        <div id="projects">
+          <ProjectsSection limit={3} />
+        </div>
         <p className="mt-10 text-sm text-slate-600 dark:text-gray-mid">
           if anything on my portfolio interests you, feel free to reach out via linkedin or email; i&apos;m always open to new opportunities or discussion. if you like this portfolio or have any advice for me, please also let me know :)
         </p>
