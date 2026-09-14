@@ -10,8 +10,8 @@ export function IntroSection() {
             hi! i&apos;m pierce luu
           </h1>
           <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
-            <li>incoming second-year computer engineering student @ uoft</li>
-            <li>i am currently completing a summer research project where i&apos;m building a virtual lab for students @ uoft</li>
+            <li>second-year computer engineering student @ uoft</li>
+            <li>i recently completed a summer research project where i&apos;m building a virtual lab for undergraduate BME students @ uoft</li>
             <li>i&apos;m learning more about system design and building reliable backend systems, as well as exploring more with ai</li>
           </ul>
         </div>
