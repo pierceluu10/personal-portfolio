@@ -28,8 +28,10 @@ export function NekoCat() {
       nekoEl = document.querySelector<HTMLElement>("[data-neko]");
       if (!nekoEl) return;
 
+      nekoEl.style.position = "fixed";
       nekoEl.style.pointerEvents = "none";
       nekoEl.style.zIndex = "9999";
+      nekoEl.style.willChange = "left, top";
 
       const hitArea = document.createElement("div");
       hitArea.style.cssText =
