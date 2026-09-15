@@ -14,11 +14,11 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "kubera",
-    title: "kubera",
+    slug: "traffer",
+    title: "traffer",
     description: "smart city traffic monitoring and mlops pipeline with real-time object detection",
     longDescription:
-      "kubera serves a fine-tuned faster r-cnn model through a fastapi rest api for real-time vehicle and pedestrian detection. a stream processor reads video frames, publishes detection events to a redis queue, and an event consumer triggers congestion and anomaly alerts. the mlops layer handles model versioning, batch inference, and performance benchmarks. fully containerized with docker and deployed on kubernetes with ci/cd via github actions.",
+      "traffer serves a fine-tuned faster r-cnn model through a fastapi rest api for real-time vehicle and pedestrian detection. a stream processor reads video frames, publishes detection events to a redis queue, and an event consumer triggers congestion and anomaly alerts. the mlops layer handles model versioning, batch inference, and performance benchmarks. fully containerized with docker and deployed on kubernetes with ci/cd via github actions.",
     url: "https://github.com/pierceluu10/kubera",
     github: "https://github.com/pierceluu10/kubera",
     date: "2026-03-01",

@@ -27,7 +27,7 @@ export function StackSection() {
   return (
     <section className="group mt-5 space-y-3">
       <h2 className="text-base font-semibold text-slate-900 dark:text-white">
-        technologies i&apos;m strongest with
+        strong suits
       </h2>
       <div className="flex flex-wrap gap-2">
         {techItems.map(({ name, icon: Icon }) => (

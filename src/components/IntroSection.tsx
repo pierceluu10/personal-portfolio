@@ -7,12 +7,12 @@ export function IntroSection() {
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1 space-y-3">
           <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
-            hi! i&apos;m pierce luu
+            welcome!
           </h1>
           <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
-            <li>second-year computer engineering student @ uoft</li>
-            <li>i recently completed a summer research project where i&apos;m building a virtual lab for undergraduate BME students @ uoft</li>
-            <li>i&apos;m learning more about system design and building reliable backend systems, as well as exploring more with ai</li>
+            <li>i'm pierce, second-year computer engineering student @ uoft</li>
+            <li>i recently completed a summer research project where i built a virtual lab for undergraduate BME students @ uoft</li>
+            <li>i&apos;m learning more about building reliable backend systems and infrastructure</li>
           </ul>
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end">
