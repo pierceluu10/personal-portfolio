@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import Image, { type StaticImageData } from "next/image";
 import { motion } from "motion/react";
-import { X, Github, ExternalLink } from "lucide-react";
+import { Github, ExternalLink } from "lucide-react";
 import contribeauBackgroundImage from "@/bgs/contribeau.png";
 import vertexBackgroundImage from "@/bgs/vertex.png";
 import { ProjectTechBadge } from "./ProjectTechBadge";
@@ -83,20 +83,30 @@ function ProjectActionLinks({
   );
 }
 
-export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
+export function ProjectModal({ project, origin, onClose: onCloseProp }: ProjectModalProps) {
+  const onClose = () => {
+    delete document.documentElement.dataset.projectModalOpen;
+    onCloseProp();
+  };
+
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") onClose();
+      if (e.key === "Escape") {
+        delete document.documentElement.dataset.projectModalOpen;
+        onCloseProp();
+      }
     };
     if (project) {
       document.body.style.overflow = "hidden";
+      document.documentElement.dataset.projectModalOpen = "true";
       window.addEventListener("keydown", handleEscape);
     }
     return () => {
       document.body.style.overflow = "";
+      delete document.documentElement.dataset.projectModalOpen;
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [project, onClose]);
+  }, [project, onCloseProp]);
 
   const description = project.longDescription || project.description;
   const heroImage = PROJECT_MODAL_BACKGROUND_IMAGE_BY_SLUG[project.slug];
@@ -144,14 +154,6 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
         transition={{ type: "spring", damping: 22, stiffness: 280 }}
         style={{ transformOrigin: "center center" }}
       >
-        <button
-          onClick={onClose}
-          className={`absolute right-3 top-3 z-20 rounded-2xl p-2.5 text-[#343434] transition-colors hover:text-slate-900 dark:text-slate-400 dark:hover:text-slate-100 ${showsHeroImage ? "bg-white/90 shadow-sm backdrop-blur-sm dark:bg-black/55" : "hover:bg-[#ebe4dc] dark:hover:bg-[#363636]"}`}
-          aria-label="close"
-        >
-          <X className="h-5 w-5" />
-        </button>
-
         {showsHeroImage ? (
           <>
             <div className={`relative overflow-hidden rounded-t-[26px] ${HERO_IMAGE_HEIGHT_CLASS_NAME} ${HERO_BOTTOM_FADE_CLASS_NAME}`}>

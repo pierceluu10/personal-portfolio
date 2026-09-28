@@ -10,6 +10,17 @@
   scrollbar-width: none;
 }
 
+[data-neko],
+[data-neko-hit] {
+  transition: opacity 120ms cubic-bezier(0.23, 1, 0.32, 1);
+}
+html[data-project-modal-open] [data-neko],
+html[data-project-modal-open] [data-neko-hit],
+html[data-project-modal-open] [data-neko-tooltip] {
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
 @layer base {
   :root {
     --background: oklch(1 0 0);

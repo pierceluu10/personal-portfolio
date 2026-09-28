@@ -49,8 +49,8 @@ const STACK_GROUPS: StackGroup[] = [
 
 function StackChip({ name, icon: Icon }: StackItem) {
   return (
-    <li className="inline-flex items-center gap-1.5 rounded-lg border-2 border-[#d3d3d3] bg-[#FAF6F0] px-2.5 py-1 text-sm text-slate-600 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:text-white dark:hover:bg-[#2a2a2a]">
-      <Icon className={`shrink-0 ${name === "aws" ? "h-4 w-4" : "h-3 w-3"}`} aria-hidden />
+    <li className="inline-flex items-center gap-2 rounded-lg border-2 border-[#d3d3d3] bg-[#FAF6F0] px-3 py-1.5 text-sm text-slate-600 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:text-white dark:hover:bg-[#2a2a2a]">
+      <Icon className={`shrink-0 ${name === "aws" ? "h-[18px] w-[18px]" : "h-3.5 w-3.5"}`} aria-hidden />
       <span>{name}</span>
     </li>
   );
@@ -58,13 +58,19 @@ function StackChip({ name, icon: Icon }: StackItem) {
 
 export function StackSection() {
   return (
-    <Section title="strong suits" className="mt-5">
-      <dl className="space-y-3 sm:space-y-2">
+    <Section title="strong suits" className="mt-3">
+      <dl className="space-y-4">
         {STACK_GROUPS.map((group) => (
-          <div key={group.label} className="flex flex-col gap-1.5 sm:flex-row sm:items-start sm:gap-3">
-            <dt className="shrink-0 text-xs text-slate-500 dark:text-gray-mid sm:w-24 sm:pt-2">{group.label}</dt>
-            <dd className="min-w-0 flex-1">
-              <ul className="flex flex-wrap gap-1.5">
+          <div key={group.label} className="group/stack space-y-2">
+            <dt className="flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors group-hover/stack:text-black dark:text-gray-mid dark:group-hover/stack:text-white">
+              <span className="shrink-0">{group.label}</span>
+              <span
+                className="h-[2px] flex-1 rounded-full bg-[#d3d3d3] transition-colors group-hover/stack:bg-[#bdb6ad] dark:bg-[#3A3A3A] dark:group-hover/stack:bg-[#4a4a4a]"
+                aria-hidden
+              />
+            </dt>
+            <dd>
+              <ul className="flex flex-wrap gap-2">
                 {group.items.map((item) => (
                   <StackChip key={item.name} {...item} />
                 ))}

@@ -75,23 +75,35 @@ export function NekoCat() {
         e.stopPropagation();
         if (!nekoRef.current) return;
         const neko = nekoRef.current;
+        const n = neko as unknown as {
+          nekoPosX: number;
+          nekoPosY: number;
+          mousePosX: number;
+          mousePosY: number;
+          idleAnimation: string | null;
+          idleAnimationFrame: number;
+          setSprite: (name: string, frame: number) => void;
+        };
+        const rect = nekoEl!.getBoundingClientRect();
         if (neko.isAwake) {
           neko.sleep();
-          const n = neko as unknown as {
-            nekoPosX: number;
-            nekoPosY: number;
-            mousePosX: number;
-            mousePosY: number;
-            idleAnimation: string | null;
-            idleAnimationFrame: number;
-            setSprite: (name: string, frame: number) => void;
-          };
           n.mousePosX = n.nekoPosX;
           n.mousePosY = n.nekoPosY;
           n.idleAnimation = "sleeping";
           n.idleAnimationFrame = 8;
           n.setSprite("sleeping", 0);
+          // neko-ts only writes left/top while walking, so the sleeping cat can be pinned to the page.
+          nekoEl!.style.position = "absolute";
+          nekoEl!.style.left = `${rect.left + window.scrollX}px`;
+          nekoEl!.style.top = `${rect.top + window.scrollY}px`;
         } else {
+          nekoEl!.style.position = "fixed";
+          nekoEl!.style.left = `${rect.left}px`;
+          nekoEl!.style.top = `${rect.top}px`;
+          n.nekoPosX = rect.left + rect.width / 2;
+          n.nekoPosY = rect.top + rect.height / 2;
+          n.mousePosX = n.nekoPosX;
+          n.mousePosY = n.nekoPosY;
           neko.wake();
         }
       };
@@ -101,6 +113,7 @@ export function NekoCat() {
         const target = (e as MouseEvent).target as Node;
         if (hitArea.contains(target)) return;
         if (!nekoRef.current || !nekoEl) return;
+        if (document.documentElement.dataset.projectModalOpen) return;
         const me = e as MouseEvent;
         const rect = nekoEl.getBoundingClientRect();
         const pad = 20;
