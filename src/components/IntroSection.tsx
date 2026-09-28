@@ -12,7 +12,7 @@ export function IntroSection() {
           <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
             <li>i'm pierce, second-year computer engineering student @ uoft</li>
             <li>i recently completed a summer research project where i built a virtual lab for undergraduate BME students @ uoft</li>
-            <li>i&apos;m learning more about building reliable backend systems and infrastructure</li>
+            <li>i&apos;m currently focused on building reliable backend systems and infrastructure.</li>
           </ul>
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end">

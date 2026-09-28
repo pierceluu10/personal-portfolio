@@ -13,7 +13,7 @@ export default function HomePage() {
         <div id="projects">
           <ProjectsSection limit={3} />
         </div>
-        <p className="mt-7 text-sm text-slate-600 dark:text-gray-mid">
+        <p className="mt-5 text-sm text-slate-600 dark:text-gray-mid">
           if anything on my portfolio interests you, feel free to reach out via linkedin or email; i&apos;m always open to new opportunities or discussion.
         </p>
       </div>
