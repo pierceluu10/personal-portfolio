@@ -36,13 +36,12 @@ const HERO_MODAL_SIZE_CLASS_NAME =
 const DEFAULT_MODAL_SIZE_CLASS_NAME =
   "max-w-2xl p-6 md:p-8";
 const HERO_BOTTOM_FADE_CLASS_NAME =
-  "bg-gradient-to-b from-transparent via-[#f8f0e3]/32 via-62% to-[#f8f0e3] dark:via-[#28282B]/62 dark:to-[#28282B]";
+  "[mask-image:linear-gradient(to_bottom,black_35%,rgb(0_0_0/0.8)_55%,rgb(0_0_0/0.45)_72%,rgb(0_0_0/0.15)_87%,transparent)]";
 const HERO_IMAGE_TREATMENT_CLASS_NAME =
   "object-cover transition-transform duration-500";
 const HERO_SURFACE_TINT_CLASS_NAME =
   "bg-white/4 dark:bg-black/12";
-const HERO_CONTENT_OFFSET_CLASS_NAME =
-  "-mt-9 md:-mt-10";
+const HERO_CONTENT_EASE = [0.23, 1, 0.32, 1] as const;
 const MODAL_CONTENT_PADDING_CLASS_NAME =
   "px-6 pb-6 md:px-8 md:pb-8";
 const PROJECT_LINK_CLASS_NAME =
@@ -155,7 +154,7 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
 
         {showsHeroImage ? (
           <>
-            <div className={`relative overflow-hidden rounded-t-[26px] ${HERO_IMAGE_HEIGHT_CLASS_NAME}`}>
+            <div className={`relative overflow-hidden rounded-t-[26px] ${HERO_IMAGE_HEIGHT_CLASS_NAME} ${HERO_BOTTOM_FADE_CLASS_NAME}`}>
               <motion.div
                 className="absolute inset-0"
                 initial={{ opacity: 0.84, scale: 1.03 }}
@@ -174,11 +173,15 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
                 />
               </motion.div>
               <div className={`absolute inset-0 ${HERO_SURFACE_TINT_CLASS_NAME}`} aria-hidden />
-              <div className={`absolute inset-x-0 bottom-0 h-[76%] ${HERO_BOTTOM_FADE_CLASS_NAME}`} aria-hidden />
             </div>
 
-            <div className={`relative z-10 ${HERO_CONTENT_OFFSET_CLASS_NAME} ${MODAL_CONTENT_PADDING_CLASS_NAME}`}>
-              <div className="pt-3">
+            <div className={`relative z-10 ${MODAL_CONTENT_PADDING_CLASS_NAME}`}>
+              <motion.div
+                className="pt-1"
+                initial={{ opacity: 0, transform: "translateY(6px)" }}
+                animate={{ opacity: 1, transform: "translateY(0px)" }}
+                transition={{ duration: 0.3, delay: 0.08, ease: HERO_CONTENT_EASE }}
+              >
                 <div className="mb-4 flex flex-wrap items-center gap-3 pr-10">
                   <h2 className="text-xl font-bold text-slate-900 dark:text-white md:text-2xl">
                       {project.title}
@@ -207,7 +210,7 @@ export function ProjectModal({ project, origin, onClose }: ProjectModalProps) {
                     ))}
                   </div>
                 )}
-              </div>
+              </motion.div>
             </div>
           </>
         ) : (
