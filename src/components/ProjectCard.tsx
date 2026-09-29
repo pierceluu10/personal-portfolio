@@ -4,12 +4,11 @@ import { Github } from "lucide-react";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "./ui/card";
+import { ProjectAward } from "./ProjectAward";
 import { ProjectTechBadge } from "./ProjectTechBadge";
-import { formatProjectDate } from "@/lib/utils";
 import type { Project } from "@/data/projects";
 
 interface ProjectCardProps {
@@ -40,7 +39,7 @@ function ArrowUpRightIcon({ className }: { className?: string }) {
 }
 
 export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCardProps) {
-  const { title, description, github, date, cardTech, tech = [], url } = project;
+  const { title, description, github, award, cardTech, tech = [], url } = project;
   const displayTech = cardTech ?? tech;
 
   return (
@@ -50,20 +49,22 @@ export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCar
         onClick={onClick}
         className="group/project w-full text-left focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
       >
-        <Card className="relative h-full min-w-0 border-2 border-[#d3d3d3] bg-[#FAF6F0] shadow-lg ring-0 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:hover:bg-[#2a2a2a]">
+        <Card className="relative min-w-0 border-2 border-[#d3d3d3] bg-[#FAF6F0] shadow-lg ring-0 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:hover:bg-[#2a2a2a]">
           {/* Hover overlay icons - top right, only visible on card hover */}
           <div
             className="pointer-events-none absolute right-4 top-4 flex items-center gap-1.5"
             onClick={(e) => e.stopPropagation()}
           >
-            <a
-              href={url}
-              target="_blank"
-              rel="noreferrer"
-              className={`pointer-events-auto rounded p-1 text-slate-600 transition-opacity group-hover/project:text-slate-900 dark:text-gray-mid dark:group-hover/project:text-white ${suppressHoverIcons ? "opacity-0" : "opacity-0 group-hover/project:opacity-100"}`}
-            >
-              <ArrowUpRightIcon className="h-3 w-3" />
-            </a>
+            {url && (
+              <a
+                href={url}
+                target="_blank"
+                rel="noreferrer"
+                className={`pointer-events-auto rounded p-1 text-slate-600 transition-opacity group-hover/project:text-slate-900 dark:text-gray-mid dark:group-hover/project:text-white ${suppressHoverIcons ? "opacity-0" : "opacity-0 group-hover/project:opacity-100"}`}
+              >
+                <ArrowUpRightIcon className="h-3 w-3" />
+              </a>
+            )}
             {github && (
               <a
                 href={github}
@@ -76,16 +77,16 @@ export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCar
             )}
           </div>
 
-          <CardHeader className="pb-1 pr-16">
+          <CardHeader className="gap-2 pb-0 pr-16">
             <CardTitle className="text-sm font-semibold text-slate-900 dark:text-white">
               {title}
             </CardTitle>
-            {date && (
-              <CardDescription className="text-xs text-slate-500 transition-colors group-hover/project:text-black dark:text-gray-mid dark:group-hover/project:text-white">
-              {formatProjectDate(date, "short")}
-            </CardDescription>
-          )}
-        </CardHeader>
+            {award && (
+              <div className="-mr-12">
+                <ProjectAward award={award} />
+              </div>
+            )}
+          </CardHeader>
         <CardContent className="flex-1 pt-0">
           <p className="break-words text-xs text-slate-600 transition-colors group-hover/project:text-black dark:text-gray-mid dark:group-hover/project:text-white">
             {description}

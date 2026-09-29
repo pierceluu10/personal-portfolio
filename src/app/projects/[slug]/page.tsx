@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { projects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
-import { formatProjectDate } from "@/lib/utils";
+import { ProjectAward } from "@/components/ProjectAward";
 import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
@@ -49,22 +49,24 @@ export default function ProjectPage({
                   GitHub
                 </a>
               )}
-              <a
-                href={project.url}
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
-              >
-                <ExternalLink className="h-4 w-4" />
-                Live
-              </a>
+              {project.url && (
+                <a
+                  href={project.url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm text-slate-500 transition-colors hover:bg-slate-200 hover:text-slate-900 dark:text-slate-400 dark:hover:bg-slate-800 dark:hover:text-slate-100"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Live
+                </a>
+              )}
             </div>
           </div>
 
-          {project.date && (
-            <p className="mb-4 text-sm text-slate-500">
-              {formatProjectDate(project.date)}
-            </p>
+          {project.award && (
+            <div className="mb-4">
+              <ProjectAward award={project.award} size="md" />
+            </div>
           )}
 
           <div className="mb-6 max-w-none">

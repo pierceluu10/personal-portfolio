@@ -9,6 +9,18 @@ import { ProjectModal } from "./ProjectModal";
 import { projects } from "@/data/projects";
 import type { Project } from "@/data/projects";
 
+const MASONRY_LAYOUTS = [
+  { columns: 1, className: "flex sm:hidden" },
+  { columns: 2, className: "hidden sm:flex lg:hidden" },
+  { columns: 3, className: "hidden lg:flex" },
+] as const;
+
+function splitIntoColumns<T>(items: T[], columns: number): T[][] {
+  return Array.from({ length: columns }, (_, columnIndex) =>
+    items.filter((_, itemIndex) => itemIndex % columns === columnIndex),
+  );
+}
+
 export function ProjectsSection({ limit }: { limit?: number }) {
   const [openProject, setOpenProject] = useState<Project | null>(null);
   const [origin, setOrigin] = useState<{ x: number; y: number; width: number; height: number } | null>(null);
@@ -29,12 +41,31 @@ export function ProjectsSection({ limit }: { limit?: number }) {
     };
   }, []);
 
+  const renderCard = (p: Project) => (
+    <div key={p.slug} className="min-w-0">
+      <ProjectCard
+        project={p}
+        suppressHoverIcons={isScrolling}
+        onClick={(e) => {
+          const rect = e.currentTarget.getBoundingClientRect();
+          setOrigin({
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            width: rect.width,
+            height: rect.height,
+          });
+          setOpenProject(p);
+        }}
+      />
+    </div>
+  );
+
   return (
     <>
       <section className="mt-5 space-y-3">
         <div className="flex items-center justify-between">
           <h2 className="text-base font-semibold text-slate-900 dark:text-white">
-            {limit !== undefined ? "recent projects" : "projects"}
+            {limit !== undefined ? "featured projects" : "projects"}
           </h2>
           {limit !== undefined && limit < projects.length && (
             <Link
@@ -46,26 +77,15 @@ export function ProjectsSection({ limit }: { limit?: number }) {
             </Link>
           )}
         </div>
-        <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {featured.map((p) => (
-            <div key={p.slug} className="min-w-0">
-              <ProjectCard
-                project={p}
-                suppressHoverIcons={isScrolling}
-                onClick={(e) => {
-                const rect = e.currentTarget.getBoundingClientRect();
-                setOrigin({
-                  x: rect.left + rect.width / 2,
-                  y: rect.top + rect.height / 2,
-                  width: rect.width,
-                  height: rect.height,
-                });
-                setOpenProject(p);
-              }}
-              />
-            </div>
-          ))}
-        </div>
+        {MASONRY_LAYOUTS.map(({ columns, className }) => (
+          <div key={columns} className={`min-w-0 items-start gap-4 ${className}`}>
+            {splitIntoColumns(featured, columns).map((column, columnIndex) => (
+              <div key={columnIndex} className="flex min-w-0 flex-1 flex-col gap-4">
+                {column.map(renderCard)}
+              </div>
+            ))}
+          </div>
+        ))}
       </section>
       <AnimatePresence>
         {openProject && (

@@ -7,7 +7,7 @@ import { Github, ExternalLink } from "lucide-react";
 import contribeauBackgroundImage from "@/bgs/contribeau.png";
 import vertexBackgroundImage from "@/bgs/vertex.png";
 import { ProjectTechBadge } from "./ProjectTechBadge";
-import { formatProjectDate } from "@/lib/utils";
+import { ProjectAward } from "./ProjectAward";
 import type { Project } from "@/data/projects";
 
 interface ProjectModalProps {
@@ -83,6 +83,58 @@ function ProjectActionLinks({
   );
 }
 
+function ProjectModalBody({
+  project,
+  description,
+}: {
+  project: Project;
+  description: string;
+}) {
+  return (
+    <>
+      <div className="mb-4 flex flex-wrap items-center gap-3">
+        <h2 className="text-xl font-bold text-slate-900 dark:text-white md:text-2xl">
+          {project.github ? (
+            <a
+              href={project.github}
+              target="_blank"
+              rel="noreferrer"
+              className="underline decoration-transparent decoration-dotted decoration-2 underline-offset-[6px] transition-[text-decoration-color] duration-150 hover:decoration-current"
+            >
+              {project.title}
+            </a>
+          ) : (
+            project.title
+          )}
+        </h2>
+        <ProjectActionLinks project={project} />
+      </div>
+
+      {project.award && (
+        <div className="mb-4">
+          <ProjectAward award={project.award} size="md" />
+        </div>
+      )}
+
+      <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-gray-mid">
+        {description}
+      </p>
+
+      {project.tech && project.tech.length > 0 && (
+        <div className="flex flex-wrap gap-2">
+          {project.tech.map((technology) => (
+            <ProjectTechBadge
+              key={technology}
+              name={technology}
+              className="rounded-lg border-2 border-[#d3d3d3] bg-[#f8f0e3]/80 text-slate-600 transition-colors hover:bg-[#ebe4dc]/90 dark:border-[#3A3A3A] dark:bg-white/5 dark:text-gray-mid dark:hover:bg-[#363636]/80"
+            />
+          ))}
+        </div>
+      )}
+    </>
+  );
+}
+
 export function ProjectModal({ project, origin, onClose: onCloseProp }: ProjectModalProps) {
   const onClose = () => {
     delete document.documentElement.dataset.projectModalOpen;
@@ -111,7 +163,6 @@ export function ProjectModal({ project, origin, onClose: onCloseProp }: ProjectM
   const description = project.longDescription || project.description;
   const heroImage = PROJECT_MODAL_BACKGROUND_IMAGE_BY_SLUG[project.slug];
   const showsHeroImage = heroImage !== undefined && HERO_IMAGE_PROJECT_SLUGS.has(project.slug);
-  const projectDate = project.date ? formatProjectDate(project.date) : null;
   const heroImageClassName = HERO_IMAGE_CLASS_NAME_BY_SLUG[project.slug] ?? "object-top";
 
   return (
@@ -184,68 +235,12 @@ export function ProjectModal({ project, origin, onClose: onCloseProp }: ProjectM
                 animate={{ opacity: 1, transform: "translateY(0px)" }}
                 transition={{ duration: 0.3, delay: 0.08, ease: HERO_CONTENT_EASE }}
               >
-                <div className="mb-4 flex flex-wrap items-center gap-3 pr-10">
-                  <h2 className="text-xl font-bold text-slate-900 dark:text-white md:text-2xl">
-                      {project.title}
-                  </h2>
-                  <ProjectActionLinks project={project} />
-                </div>
-
-                {projectDate && (
-                  <p className="mb-4 text-xs text-slate-600 dark:text-gray-mid">
-                    {projectDate}
-                  </p>
-                )}
-
-                <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-gray-mid">
-                  {description}
-                </p>
-
-                {project.tech && project.tech.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {project.tech.map((technology) => (
-                      <ProjectTechBadge
-                        key={technology}
-                        name={technology}
-                        className="rounded-lg border-2 border-[#d3d3d3] bg-[#f8f0e3]/80 text-slate-600 transition-colors hover:bg-[#ebe4dc]/90 dark:border-[#3A3A3A] dark:bg-white/5 dark:text-gray-mid dark:hover:bg-[#363636]/80"
-                      />
-                    ))}
-                  </div>
-                )}
+                <ProjectModalBody project={project} description={description} />
               </motion.div>
             </div>
           </>
         ) : (
-          <>
-            <div className="mb-4 flex flex-wrap items-center gap-3 pr-10">
-              <h2 className="text-xl font-bold text-slate-900 dark:text-white md:text-2xl">
-                {project.title}
-              </h2>
-              <ProjectActionLinks project={project} />
-            </div>
-
-            {projectDate && (
-              <p className="mb-4 text-xs text-slate-600 dark:text-gray-mid">
-                {projectDate}
-              </p>
-            )}
-
-            <p className="mb-6 text-sm leading-relaxed text-slate-600 dark:text-gray-mid">
-              {description}
-            </p>
-
-            {project.tech && project.tech.length > 0 && (
-              <div className="flex flex-wrap gap-2">
-                {project.tech.map((technology) => (
-                  <ProjectTechBadge
-                    key={technology}
-                    name={technology}
-                    className="rounded-lg border-2 border-[#d3d3d3] bg-[#f8f0e3]/80 text-slate-600 transition-colors hover:bg-[#ebe4dc]/90 dark:border-[#3A3A3A] dark:bg-white/5 dark:text-gray-mid dark:hover:bg-[#363636]/80"
-                  />
-                ))}
-              </div>
-            )}
-          </>
+          <ProjectModalBody project={project} description={description} />
         )}
       </motion.div>
     </motion.div>

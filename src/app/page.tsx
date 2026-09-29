@@ -2,6 +2,7 @@ import { IntroSection } from "@/components/IntroSection";
 import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { StackSection } from "@/components/StackSection";
+import { CopyEmail } from "@/components/CopyEmail";
 
 export default function HomePage() {
   return (
@@ -16,7 +17,7 @@ export default function HomePage() {
         </div>
         <StackSection />
         <p className="mt-5 text-sm text-slate-600 transition-colors hover:text-black dark:text-gray-mid dark:hover:text-white">
-          if anything on my portfolio interests you, feel free to reach out via linkedin or email; i&apos;m always open to new opportunities or discussion.
+          if anything on my portfolio interests you, feel free to reach out via linkedin or <CopyEmail />; i&apos;m always open to new opportunities or discussion.
         </p>
       </div>
     </main>
