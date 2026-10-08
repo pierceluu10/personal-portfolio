@@ -5,6 +5,7 @@ import { Neko } from "neko-ts";
 
 const RESTING_ORIGIN = { x: 36, y: 30 };
 const HEADING_GAP = 8;
+const HEADING_VERTICAL_OFFSET = 4;
 const CAT_HALF_SIZE = 16;
 const MOBILE_BREAKPOINT = 640;
 const MOBILE_RESTING_Y = 20;
@@ -41,7 +42,7 @@ export function NekoCat() {
 
       const heading = document.querySelector("[data-neko-heading]")?.getBoundingClientRect();
       const origin = heading
-        ? { x: heading.right + HEADING_GAP + CAT_HALF_SIZE, y: heading.top + heading.height / 2 }
+        ? { x: heading.right + HEADING_GAP + CAT_HALF_SIZE, y: heading.top + heading.height / 2 - HEADING_VERTICAL_OFFSET }
         : {
             ...RESTING_ORIGIN,
             y: window.innerWidth < MOBILE_BREAKPOINT ? MOBILE_RESTING_Y : RESTING_ORIGIN.y,
