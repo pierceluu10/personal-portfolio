@@ -3,6 +3,23 @@
 import { useEffect, useRef } from "react";
 import { Neko } from "neko-ts";
 
+const RESTING_ORIGIN = { x: 36, y: 100 };
+const MOBILE_BREAKPOINT = 640;
+const MOBILE_RESTING_Y = 20;
+const SLEEP_ANIMATION_START = 8;
+
+function showSleepingSprite(neko: Neko) {
+  // neko-ts exposes sleep state but keeps its animation controls private.
+  const animation = neko as unknown as {
+    idleAnimation: string;
+    idleAnimationFrame: number;
+    setSprite: (name: string, frame: number) => void;
+  };
+  animation.idleAnimation = "sleeping";
+  animation.idleAnimationFrame = SLEEP_ANIMATION_START;
+  animation.setSprite("sleeping", 0);
+}
+
 export function NekoCat() {
   const nekoRef = useRef<Neko | null>(null);
 
@@ -22,7 +39,13 @@ export function NekoCat() {
 
       nekoRef.current = new Neko({
         speed: 10,
-        origin: { x: 100, y: 100 },
+        origin: {
+          ...RESTING_ORIGIN,
+          y: window.innerWidth < MOBILE_BREAKPOINT
+            ? MOBILE_RESTING_Y
+            : RESTING_ORIGIN.y,
+        },
+        defaultState: "sleep",
       });
 
       nekoEl = document.querySelector<HTMLElement>("[data-neko]");
@@ -32,6 +55,7 @@ export function NekoCat() {
       nekoEl.style.pointerEvents = "none";
       nekoEl.style.zIndex = "9999";
       nekoEl.style.willChange = "left, top";
+      showSleepingSprite(nekoRef.current);
 
       const hitArea = document.createElement("div");
       hitArea.style.cssText =
@@ -80,22 +104,16 @@ export function NekoCat() {
           nekoPosY: number;
           mousePosX: number;
           mousePosY: number;
-          idleAnimation: string | null;
-          idleAnimationFrame: number;
-          setSprite: (name: string, frame: number) => void;
         };
         const rect = nekoEl!.getBoundingClientRect();
         if (neko.isAwake) {
           neko.sleep();
           n.mousePosX = n.nekoPosX;
           n.mousePosY = n.nekoPosY;
-          n.idleAnimation = "sleeping";
-          n.idleAnimationFrame = 8;
-          n.setSprite("sleeping", 0);
-          // neko-ts only writes left/top while walking, so the sleeping cat can be pinned to the page.
-          nekoEl!.style.position = "absolute";
-          nekoEl!.style.left = `${rect.left + window.scrollX}px`;
-          nekoEl!.style.top = `${rect.top + window.scrollY}px`;
+          showSleepingSprite(neko);
+          nekoEl!.style.position = "fixed";
+          nekoEl!.style.left = `${rect.left}px`;
+          nekoEl!.style.top = `${rect.top}px`;
         } else {
           nekoEl!.style.position = "fixed";
           nekoEl!.style.left = `${rect.left}px`;
