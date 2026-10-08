@@ -5,11 +5,12 @@ import { Neko } from "neko-ts";
 
 const RESTING_ORIGIN = { x: 36, y: 30 };
 const HEADING_GAP = 8;
-const HEADING_VERTICAL_OFFSET = 4;
+const HEADING_VERTICAL_OFFSET = 5;
 const CAT_HALF_SIZE = 16;
 const MOBILE_BREAKPOINT = 640;
 const MOBILE_RESTING_Y = 20;
 const SLEEP_ANIMATION_START = 8;
+const SLEEP_FRAMES_PER_SPRITE = 4;
 
 function showSleepingSprite(neko: Neko) {
   // neko-ts exposes sleep state but keeps its animation controls private.
@@ -17,10 +18,16 @@ function showSleepingSprite(neko: Neko) {
     idleAnimation: string;
     idleAnimationFrame: number;
     setSprite: (name: string, frame: number) => void;
+    idle: () => void;
   };
   animation.idleAnimation = "sleeping";
   animation.idleAnimationFrame = SLEEP_ANIMATION_START;
   animation.setSprite("sleeping", 0);
+  // Replace the randomized idle cycle, which otherwise ends sleep after 192 frames.
+  animation.idle = () => {
+    animation.setSprite("sleeping", Math.floor(animation.idleAnimationFrame / SLEEP_FRAMES_PER_SPRITE));
+    animation.idleAnimationFrame += 1;
+  };
 }
 
 export function NekoCat() {
