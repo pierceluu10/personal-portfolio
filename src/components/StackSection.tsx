@@ -65,7 +65,7 @@ function StackChip({ name, icon: Icon }: StackItem) {
 export function StackSection() {
   return (
     <Section title="technical skills" className="mt-3">
-      <dl className="space-y-4">
+      <dl className="space-y-3">
         {STACK_GROUPS.map((group) => (
           <div key={group.label} className="group/stack space-y-2">
             <dt className="flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors group-hover/stack:text-black dark:text-gray-mid dark:group-hover/stack:text-white">

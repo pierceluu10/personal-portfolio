@@ -36,8 +36,8 @@ export const projects: Project[] = [
       "agentigram is a peer-to-peer coordination layer for coding agents working on the same codebase. it watches what each agent is changing, detects conflicts before they reach git, and lets agents negotiate shared contracts across different developers' laptops. won the best sovereign tool track at hack the north, canada's largest hackathon.",
     github: "https://github.com/pierceluu10/agentigram",
     award: { title: "best sovereign tool", event: "hack the north" },
-    cardTech: ["hyperswarm", "mcp", "electron", "pear"],
-    tech: ["hyperswarm", "hypercore", "mcp", "qvac", "electron", "pear"],
+    cardTech: ["hyperswarm", "electron", "pear"],
+    tech: ["hyperswarm", "hypercore", "qvac", "electron", "pear"],
   },
   {
     slug: "traffer",
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     longDescription:
       "traffer serves a fine-tuned faster r-cnn model through a fastapi rest api for real-time vehicle and pedestrian detection. a stream processor reads video frames, publishes detection events to a redis queue, and an event consumer triggers congestion and anomaly alerts. the mlops layer handles model versioning, batch inference, and performance benchmarks. fully containerized with docker and deployed on kubernetes with ci/cd via github actions.",
     github: "https://github.com/pierceluu10/kubera",
-    cardTech: ["python", "pytorch", "kubernetes"],
+    cardTech: ["docker", "kubernetes", "pytorch"],
     tech: ["python", "pytorch", "fastapi", "docker", "kubernetes", "opencv", "redis"],
   },
   {
