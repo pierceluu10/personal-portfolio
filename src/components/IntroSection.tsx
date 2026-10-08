@@ -7,7 +7,7 @@ export function IntroSection() {
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1 space-y-3">
           <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
-            hi there!
+            <span data-neko-heading>hi there!</span>
           </h1>
           <div className="space-y-2 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
             <p>i&apos;m pierce, second-year computer engineering student @ uoft &amp; hackathon enthusiast.</p>

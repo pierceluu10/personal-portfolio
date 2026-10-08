@@ -3,7 +3,9 @@
 import { useEffect, useRef } from "react";
 import { Neko } from "neko-ts";
 
-const RESTING_ORIGIN = { x: 36, y: 100 };
+const RESTING_ORIGIN = { x: 36, y: 30 };
+const HEADING_GAP = 8;
+const CAT_HALF_SIZE = 16;
 const MOBILE_BREAKPOINT = 640;
 const MOBILE_RESTING_Y = 20;
 const SLEEP_ANIMATION_START = 8;
@@ -37,14 +39,17 @@ export function NekoCat() {
         clearInterval((window as { nekoInterval?: ReturnType<typeof setInterval> }).nekoInterval);
       }
 
+      const heading = document.querySelector("[data-neko-heading]")?.getBoundingClientRect();
+      const origin = heading
+        ? { x: heading.right + HEADING_GAP + CAT_HALF_SIZE, y: heading.top + heading.height / 2 }
+        : {
+            ...RESTING_ORIGIN,
+            y: window.innerWidth < MOBILE_BREAKPOINT ? MOBILE_RESTING_Y : RESTING_ORIGIN.y,
+          };
+
       nekoRef.current = new Neko({
         speed: 10,
-        origin: {
-          ...RESTING_ORIGIN,
-          y: window.innerWidth < MOBILE_BREAKPOINT
-            ? MOBILE_RESTING_Y
-            : RESTING_ORIGIN.y,
-        },
+        origin,
         defaultState: "sleep",
       });
 
