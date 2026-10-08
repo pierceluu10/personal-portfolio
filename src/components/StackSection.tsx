@@ -64,7 +64,7 @@ function StackChip({ name, icon: Icon }: StackItem) {
 
 export function StackSection() {
   return (
-    <Section title="technical skills" className="mt-3">
+    <Section title="technical skills" className="mt-4">
       <dl className="space-y-3">
         {STACK_GROUPS.map((group) => (
           <div key={group.label} className="group/stack space-y-2">
