@@ -1,5 +1,5 @@
 import type { IconType } from "react-icons";
-import { FaAws } from "react-icons/fa";
+import { FaAws, FaJava } from "react-icons/fa";
 import {
   SiCplusplus,
   SiDocker,
@@ -9,6 +9,9 @@ import {
   SiPython,
   SiPytorch,
   SiTypescript,
+  SiJavascript,
+  SiRedis,
+  SiScikitlearn,
 } from "react-icons/si";
 import { Section } from "./Section";
 
@@ -27,8 +30,10 @@ const STACK_GROUPS: StackGroup[] = [
     label: "languages",
     items: [
       { name: "python", icon: SiPython },
-      { name: "c/c++", icon: SiCplusplus },
+      { name: "c++", icon: SiCplusplus },
       { name: "typescript", icon: SiTypescript },
+      { name: "javascript", icon: SiJavascript },
+      { name: "java", icon: FaJava },
     ],
   },
   {
@@ -36,6 +41,7 @@ const STACK_GROUPS: StackGroup[] = [
     items: [
       { name: "fastapi", icon: SiFastapi },
       { name: "postgresql", icon: SiPostgresql },
+      { name: "redis", icon: SiRedis },
       { name: "docker", icon: SiDocker },
       { name: "kubernetes", icon: SiKubernetes },
       { name: "aws", icon: FaAws },
@@ -43,7 +49,7 @@ const STACK_GROUPS: StackGroup[] = [
   },
   {
     label: "ml",
-    items: [{ name: "pytorch", icon: SiPytorch }],
+    items: [{ name: "pytorch", icon: SiPytorch }, { name: "scikit-learn", icon: SiScikitlearn }],
   },
 ];
 
@@ -58,7 +64,7 @@ function StackChip({ name, icon: Icon }: StackItem) {
 
 export function StackSection() {
   return (
-    <Section title="strong suits" className="mt-3">
+    <Section title="technical skills" className="mt-3">
       <dl className="space-y-4">
         {STACK_GROUPS.map((group) => (
           <div key={group.label} className="group/stack space-y-2">

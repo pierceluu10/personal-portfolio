@@ -1,5 +1,4 @@
 import { IntroSection } from "@/components/IntroSection";
-import { AboutSection } from "@/components/AboutSection";
 import { ProjectsSection } from "@/components/ProjectsSection";
 import { StackSection } from "@/components/StackSection";
 import { CopyEmail } from "@/components/CopyEmail";
@@ -7,11 +6,8 @@ import { CopyEmail } from "@/components/CopyEmail";
 export default function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ed] dark:bg-[#28282B]">
-      <div className="mx-auto min-w-0 max-w-2xl bg-[#f7f4ed] px-6 py-10 dark:bg-[#28282B] md:px-8 md:py-12">
+      <div className="mx-auto min-w-0 max-w-2xl bg-[#f7f4ed] px-5 py-9 dark:bg-[#28282B] md:px-7 md:py-11">
         <IntroSection />
-        <div className="mt-5">
-          <AboutSection />
-        </div>
         <div id="projects">
           <ProjectsSection limit={3} />
         </div>

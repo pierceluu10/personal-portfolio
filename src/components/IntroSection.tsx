@@ -7,13 +7,14 @@ export function IntroSection() {
       <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:items-start sm:justify-between">
         <div className="min-w-0 flex-1 space-y-3">
           <h1 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-2xl">
-            welcome!
+            about me
           </h1>
-          <ul className="list-outside list-disc pl-5 space-y-0.5 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
-            <li>i'm pierce, second-year computer engineering student @ uoft</li>
-            <li>i recently completed a <span className="dotted-link">summer research project</span> where i built a virtual lab for undergraduate BME students @ uoft</li>
-            <li>i&apos;m currently focused on building reliable backend systems and infrastructure.</li>
-          </ul>
+          <div className="space-y-2 text-sm text-slate-600 transition-colors group-hover/intro:text-black dark:text-gray-mid dark:group-hover/intro:text-white">
+            <p>i&apos;m pierce, second-year computer engineering student @ uoft &amp; hackathon enthusiast.</p>
+            <p>i recently completed a <span className="dotted-link">summer research internship</span> where i built infrastructure for a virtual lab now securely used by 3 engineering courses @ uoft.</p>
+            <p>i&apos;m currently focused on gaining more experience building reliable backend systems, while also experimenting with fun ideas for projects.</p>
+            <p>outside of engineering, i also love snowboarding and i&apos;m a black belt in karate.</p>
+          </div>
         </div>
         <div className="flex shrink-0 items-center gap-2 sm:flex-col sm:items-end">
           <div className="flex items-center gap-1">
