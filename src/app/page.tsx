@@ -6,7 +6,7 @@ import { CopyEmail } from "@/components/CopyEmail";
 export default function HomePage() {
   return (
     <main className="min-h-screen overflow-x-hidden bg-[#f7f4ed] dark:bg-[#28282B]">
-      <div className="mx-auto min-w-0 max-w-[53rem] bg-[#f7f4ed] px-4 py-9 dark:bg-[#28282B] md:px-6 md:py-7">
+      <div className="mx-auto min-w-0 max-w-[52rem] bg-[#f7f4ed] px-4 py-9 dark:bg-[#28282B] md:px-6 md:py-7">
         <IntroSection />
         <div id="projects">
           <ProjectsSection limit={3} />
