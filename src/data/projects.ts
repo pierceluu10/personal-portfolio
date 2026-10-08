@@ -25,8 +25,8 @@ export const projects: Project[] = [
     longDescription:
       "silo labs turns natural-language hardware requirements into working firmware. a multi-agent pipeline plans peripherals and pin assignments, generates and builds the firmware, then runs the result in a live hardware simulation.",
     github: "https://github.com/pierceluu10/Silo-Labs",
-    cardTech: ["langgraph", "fastapi", "rp2040"],
-    tech: ["langgraph", "fastapi", "rp2040", "wokwi", "docker"],
+    cardTech: ["langgraph", "fastapi", "langchain"],
+    tech: ["langgraph", "fastapi", "langchain", "wokwi", "docker"],
   },
   {
     slug: "agentigram",
@@ -36,8 +36,8 @@ export const projects: Project[] = [
       "agentigram is a peer-to-peer coordination layer for coding agents working on the same codebase. it watches what each agent is changing, detects conflicts before they reach git, and lets agents negotiate shared contracts across different developers' laptops. won the best sovereign tool track at hack the north, canada's largest hackathon.",
     github: "https://github.com/pierceluu10/agentigram",
     award: { title: "best sovereign tool", event: "hack the north" },
-    cardTech: ["hyperswarm", "mcp", "electron"],
-    tech: ["hyperswarm", "hypercore", "mcp", "qvac", "electron"],
+    cardTech: ["hyperswarm", "mcp", "electron", "pear"],
+    tech: ["hyperswarm", "hypercore", "mcp", "qvac", "electron", "pear"],
   },
   {
     slug: "traffer",
@@ -47,7 +47,7 @@ export const projects: Project[] = [
       "traffer serves a fine-tuned faster r-cnn model through a fastapi rest api for real-time vehicle and pedestrian detection. a stream processor reads video frames, publishes detection events to a redis queue, and an event consumer triggers congestion and anomaly alerts. the mlops layer handles model versioning, batch inference, and performance benchmarks. fully containerized with docker and deployed on kubernetes with ci/cd via github actions.",
     github: "https://github.com/pierceluu10/kubera",
     cardTech: ["python", "pytorch", "kubernetes"],
-    tech: ["python", "pytorch", "fastapi", "docker", "kubernetes", "opencv", "redis", "github actions"],
+    tech: ["python", "pytorch", "fastapi", "docker", "kubernetes", "opencv", "redis"],
   },
   {
     slug: "haggle",
@@ -57,8 +57,8 @@ export const projects: Project[] = [
       "haggle is a voice-first shopping agent that calls businesses and negotiates on your behalf. talk through what you're looking for with a concierge, choose who to contact, and an outbound agent handles the call and brings the result back into the app. placed 2nd overall at the cursor x toronto tech week hackathon.",
     github: "https://github.com/pierceluu10/haggle",
     award: { title: "2nd overall", event: "cursor x toronto tech week" },
-    cardTech: ["elevenlabs", "twilio", "next.js"],
-    tech: ["elevenlabs", "twilio", "next.js", "react", "tailwindcss"],
+    cardTech: ["elevenlabs", "twilio", "typescript"],
+    tech: ["elevenlabs", "twilio", "typescript", "react", "tailwindcss"],
   },
   {
     slug: "swagrams",
@@ -95,12 +95,12 @@ export const projects: Project[] = [
   {
     slug: "vertex",
     title: "vertex",
-    description: "ai math tutoring app with real-time voice, adaptive quizzes, and attention tracking",
+    description: "ai math tutor that brings a parent's face to life with voice and interactive math visualizations",
     longDescription:
       "vertex connects parents and kids through an ai math tutor. parents configure learning preferences and generate access codes; kids study with gpt-4o, latex rendering, and interactive diagrams. a simli avatar tutors in real time through livekit. an attention engine tracks focus via tab visibility, mouse inactivity, and webcam face detection, adjusting content difficulty and notifying parents when focus drops.",
     github: "https://github.com/pierceluu10/vertex",
     cardTech: ["next.js", "openai api", "livekit"],
-    tech: ["next.js", "typescript", "tailwindcss", "supabase", "openai api", "simli", "livekit", "resend", "mediapipe"],
+    tech: ["next.js", "typescript", "tailwindcss", "supabase", "openai api", "simli", "livekit", "resend"],
   },
   {
     slug: "finco",
@@ -121,8 +121,8 @@ export const projects: Project[] = [
     longDescription:
       "atryn helps university of toronto students discover research opportunities through a conversational ai assistant powered by amazon bedrock. students can browse labs, chat with the ai to find professors aligned with their interests, and submit video introductions. built on a serverless aws stack with lambda, dynamodb, and s3.",
     github: "https://github.com/pierceluu10/atryn",
-    cardTech: ["next.js", "aws", "bedrock"],
-    tech: ["next.js", "typescript", "tailwindcss", "amazon bedrock", "aws lambda", "dynamodb", "s3", "aws amplify"],
+    cardTech: ["aws", "bedrock"],
+    tech: ["typescript", "tailwindcss", "amazon bedrock", "aws lambda", "dynamodb", "s3", "aws amplify"],
   },
   {
     slug: "questr",
