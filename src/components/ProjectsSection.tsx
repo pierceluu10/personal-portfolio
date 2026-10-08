@@ -45,6 +45,7 @@ export function ProjectsSection({ limit }: { limit?: number }) {
     <div key={p.slug} className="min-w-0">
       <ProjectCard
         project={p}
+        compactAward={limit !== undefined}
         suppressHoverIcons={isScrolling}
         onClick={(e) => {
           const rect = e.currentTarget.getBoundingClientRect();

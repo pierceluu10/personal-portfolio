@@ -1,6 +1,6 @@
 "use client";
 
-import { Github } from "lucide-react";
+import { Github, Trophy } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -14,6 +14,7 @@ import type { Project } from "@/data/projects";
 interface ProjectCardProps {
   project: Project;
   suppressHoverIcons?: boolean;
+  compactAward?: boolean;
   onClick: (e: React.MouseEvent) => void;
 }
 
@@ -38,7 +39,7 @@ function ArrowUpRightIcon({ className }: { className?: string }) {
   );
 }
 
-export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCardProps) {
+export function ProjectCard({ project, suppressHoverIcons, compactAward = false, onClick }: ProjectCardProps) {
   const { title, description, github, award, cardTech, tech = [], url } = project;
   const displayTech = cardTech ?? tech;
 
@@ -50,9 +51,18 @@ export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCar
         className="group/project w-full text-left focus:outline-none focus:ring-0 focus-visible:outline-none focus-visible:ring-0"
       >
         <Card className="relative min-w-0 border-2 border-[#d3d3d3] bg-[#FAF6F0] shadow-lg ring-0 transition-colors hover:bg-[#ebe4dc] dark:border-[#3A3A3A] dark:bg-[#333333] dark:hover:bg-[#2a2a2a]">
+          {award && compactAward && (
+            <span
+              className="absolute right-4 top-4 text-[#b08a2e] dark:text-[#d9b95e]"
+              title={`${award.title} · ${award.event}`}
+              aria-label={`${award.title} at ${award.event}`}
+            >
+              <Trophy className="h-3.5 w-3.5" aria-hidden />
+            </span>
+          )}
           {/* Hover overlay icons - top right, only visible on card hover */}
           <div
-            className="pointer-events-none absolute right-4 top-4 flex items-center gap-1.5"
+            className={`pointer-events-none absolute top-4 flex items-center gap-1.5 ${award && compactAward ? "right-10" : "right-4"}`}
             onClick={(e) => e.stopPropagation()}
           >
             {url && (
@@ -81,7 +91,7 @@ export function ProjectCard({ project, suppressHoverIcons, onClick }: ProjectCar
             <CardTitle className="text-sm font-semibold text-slate-900 dark:text-white">
               {title}
             </CardTitle>
-            {award && (
+            {award && !compactAward && (
               <div className="-mr-12">
                 <ProjectAward award={award} />
               </div>
