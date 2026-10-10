@@ -6,6 +6,7 @@ import { motion } from "motion/react";
 import { Github, ExternalLink } from "lucide-react";
 import contribeauBackgroundImage from "@/bgs/contribeau.png";
 import vertexBackgroundImage from "@/bgs/vertex.png";
+import swagramsBackgroundImage from "@/bgs/swagrams.png";
 import { ProjectTechBadge } from "./ProjectTechBadge";
 import { ProjectAward } from "./ProjectAward";
 import type { Project } from "@/data/projects";
@@ -19,12 +20,14 @@ interface ProjectModalProps {
 const PROJECT_MODAL_BACKGROUND_IMAGE_BY_SLUG: Partial<Record<Project["slug"], StaticImageData>> = {
   contribeau: contribeauBackgroundImage,
   vertex: vertexBackgroundImage,
+  swagrams: swagramsBackgroundImage,
 };
 
-const HERO_IMAGE_PROJECT_SLUGS = new Set<Project["slug"]>(["contribeau", "vertex"]);
+const HERO_IMAGE_PROJECT_SLUGS = new Set<Project["slug"]>(["contribeau", "vertex", "swagrams"]);
 const HERO_IMAGE_CLASS_NAME_BY_SLUG: Partial<Record<Project["slug"], string>> = {
   contribeau: "object-[12%_top] scale-[1.01]",
   vertex: "object-center scale-[1.04]",
+  swagrams: "object-center",
 };
 
 const MODAL_BACKGROUND_CLASS_NAME =
