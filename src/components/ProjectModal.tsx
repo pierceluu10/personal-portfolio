@@ -19,6 +19,7 @@ const HERO_IMAGE_CLASS_NAME_BY_SLUG: Partial<Record<Project["slug"], string>> = 
   contribeau: "object-[12%_top] scale-[1.01]",
   vertex: "object-center",
   swagrams: "object-top",
+  haggle: "object-top",
 };
 
 const MODAL_BACKGROUND_CLASS_NAME =
