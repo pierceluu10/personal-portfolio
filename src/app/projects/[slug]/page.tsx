@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import { projectPreviewImages } from "@/data/project-previews";
 import { ArrowLeft, Github, ExternalLink } from "lucide-react";
 import { projects } from "@/data/projects";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +20,7 @@ export default function ProjectPage({
   const project = projects.find((p) => p.slug === slug);
   if (!project) notFound();
 
+  const previewImage = projectPreviewImages[project.slug];
   const description =
     project.longDescription || project.description;
 
@@ -33,6 +36,17 @@ export default function ProjectPage({
         </Link>
 
         <div className="rounded-xl border-2 border-slate-200 bg-[#f7f4ed] p-6 shadow-lg dark:border-[#3A3A3A] dark:bg-slate-900/50 dark:shadow-xl md:p-8">
+          {previewImage && (
+            <Image
+              src={previewImage}
+              alt={`${project.title} project preview`}
+              sizes="(max-width: 768px) calc(100vw - 96px), 576px"
+              priority
+              placeholder="blur"
+              className="mb-6 h-auto w-full rounded-lg"
+            />
+          )}
+
           <div className="mb-4 flex flex-wrap items-center gap-3">
             <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 md:text-3xl">
               {project.title}
