@@ -1,6 +1,7 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {
-  transpilePackages: ["geist"],
-};
+const { PHASE_DEVELOPMENT_SERVER } = require("next/constants");
 
-module.exports = nextConfig;
+/** @type {(phase: string) => import('next').NextConfig} */
+module.exports = (phase) => ({
+  transpilePackages: ["geist"],
+  distDir: phase === PHASE_DEVELOPMENT_SERVER ? ".next-dev" : ".next",
+});
