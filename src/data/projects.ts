@@ -40,6 +40,27 @@ export const projects: Project[] = [
     tech: ["hyperswarm", "hypercore", "qvac", "electron", "pear"],
   },
   {
+    slug: "litmus",
+    title: "litmus",
+    description: "parallel research agents that test the paper claims you doubt",
+    longDescription:
+      "litmus turns the claims you highlighted in research papers into real experiments. a langgraph orchestrator drafts each experiment and dispatches up to 4 parallel research agents, which train on cifar-10 using modal a100s and grade results with paired t-intervals across 5 seeds. openai structured outputs ground every answer in your notes, and citations to sources the model never saw are stripped. won hack the valley.",
+    github: "https://github.com/pierceluu10/Litmus",
+    award: { title: "winner", event: "hack the valley" },
+    cardTech: ["langgraph", "fastapi", "modal"],
+    tech: ["python", "langgraph", "fastapi", "openai api", "modal", "pytorch", "react", "three.js"],
+  },
+  {
+    slug: "reposistory",
+    title: "reposiStory",
+    description: "offline codebase explorer that turns your repository into a pixel-art village",
+    longDescription:
+      "reposiStory is a native, offline codebase explorer. open a local repository and its folders become a pixel-art village you can walk around. click a building to see its source, dependencies, reverse references and symbols, take a guided tour from the entry point, or trace the shortest dependency path between two files. tree-sitter parses javascript, typescript and c/c++ to find real imports and includes.",
+    github: "https://github.com/pierceluu10/reposiStory",
+    cardTech: ["c++", "opengl", "tree-sitter"],
+    tech: ["c++", "cmake", "opengl", "tree-sitter"],
+  },
+  {
     slug: "traffer",
     title: "traffer",
     description: "smart city traffic monitoring and mlops pipeline with real-time object detection",
