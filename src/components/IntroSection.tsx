@@ -1,4 +1,4 @@
-import { Github, Linkedin, FileText } from "lucide-react";
+import { Github, Linkedin } from "lucide-react";
 import { ThemeToggle } from "./ThemeToggle";
 
 export function IntroSection() {
@@ -35,15 +35,6 @@ export function IntroSection() {
               aria-label="linkedin"
             >
               <Linkedin className="h-4 w-4" />
-            </a>
-            <a
-              href="https://pierceluu10.github.io/pierceluu10-resume/CURRENT_RESUME_PIERCE.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-md p-1.5 text-black transition-colors hover:bg-slate-100 hover:text-slate-900 dark:text-white dark:hover:bg-white/10 dark:hover:text-white"
-              aria-label="resume"
-            >
-              <FileText className="h-3.5 w-3.5" />
             </a>
           </div>
           <ThemeToggle />
