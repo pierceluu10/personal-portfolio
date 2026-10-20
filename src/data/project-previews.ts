@@ -9,6 +9,8 @@ import atrynBackgroundImage from "@/bgs/atryn.jpg";
 import fincoBackgroundImage from "@/bgs/finco.jpg";
 import agentigramBackgroundImage from "@/bgs/agentigram.jpg";
 import questrBackgroundImage from "@/bgs/questr.jpg";
+import litmusBackgroundImage from "@/bgs/litmus.jpg";
+import reposistoryBackgroundImage from "@/bgs/reposistory.jpg";
 
 export const projectPreviewImages: Partial<Record<Project["slug"], StaticImageData>> = {
   contribeau: contribeauBackgroundImage,
@@ -20,5 +22,7 @@ export const projectPreviewImages: Partial<Record<Project["slug"], StaticImageDa
   finco: fincoBackgroundImage,
   agentigram: agentigramBackgroundImage,
   questr: questrBackgroundImage,
+  litmus: litmusBackgroundImage,
+  reposistory: reposistoryBackgroundImage,
 };
 
