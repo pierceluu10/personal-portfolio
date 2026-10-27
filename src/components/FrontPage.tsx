@@ -90,7 +90,7 @@ function Email() {
         email
       </button>
       {/* Bottom padding bridges the gap, so the card stays open while the pointer travels up to it. */}
-      <span className="pointer-events-none absolute bottom-full left-0 origin-bottom-left translate-y-1 scale-[0.98] pb-[10px] opacity-0 transition-[opacity,transform] duration-[120ms] ease-out group-focus-within/email:pointer-events-auto group-focus-within/email:translate-y-0 group-focus-within/email:scale-100 group-focus-within/email:opacity-100 group-hover/email:pointer-events-auto group-hover/email:translate-y-0 group-hover/email:scale-100 group-hover/email:opacity-100">
+      <span className="pointer-events-none absolute bottom-full left-0 origin-bottom-left translate-y-1 scale-[0.98] pb-[10px] opacity-0 transition-[opacity,transform] duration-[120ms] ease-out group-has-[:focus-visible]/email:pointer-events-auto group-has-[:focus-visible]/email:translate-y-0 group-has-[:focus-visible]/email:scale-100 group-has-[:focus-visible]/email:opacity-100 group-hover/email:pointer-events-auto group-hover/email:translate-y-0 group-hover/email:scale-100 group-hover/email:opacity-100">
         <button
           type="button"
           onClick={copy}
