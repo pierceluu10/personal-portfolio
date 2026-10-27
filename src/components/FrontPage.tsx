@@ -37,9 +37,9 @@ function MobileMention({ source, children }: MentionProps) {
 function Quote() {
   return (
     <>
-      the tide moves everyone,
+      in the deep,
       <br />
-      choose where you drift
+      you make your own light
       <span
         aria-hidden="true"
         className="ml-1 inline-block h-[1em] w-[0.55em] translate-y-[0.15em] animate-blink bg-foreground motion-reduce:animate-none"
