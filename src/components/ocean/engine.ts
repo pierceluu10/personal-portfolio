@@ -114,6 +114,9 @@ const SLOTS = [
 // Hue A to hue B per jelly, so the first frame always shows both colours.
 const HUES = [0.12, 0.9, 0.3, 0.78, 0.55, 0.04];
 const TEMPO = 1;
+// How far past an edge, in bell radii, a jelly must drift before it wraps; tentacles trail up to ~3.75 radii behind.
+const WRAP_MARGIN_X = 3.2;
+const WRAP_MARGIN_Y = 4.4;
 const LURE_SECONDS = 1.8;
 // A click's ripple: one faint ring that reaches this share of the page's short side.
 const RIPPLE_REACH = 0.24;
@@ -401,10 +404,14 @@ export class OceanEngine {
       }
       j.theta += (want - j.theta) * Math.min(1, dt * (luring ? 0.9 : 0.32));
 
-      if (j.y < -j.R * 4.4) this.respawn(j);
-      else if (j.x < -j.R * 3.2) this.shiftJelly(j, this.W + j.R * 3, 0);
-      else if (j.x > this.W + j.R * 3.2) this.shiftJelly(j, -this.W - j.R * 3, 0);
-      else if (j.y > this.H + j.R * 6) this.shiftJelly(j, 0, -(this.H + j.R * 9));
+      // Wrap once the bell and its trailing tentacles are fully off one edge, landing just as far past the opposite edge
+      // so it swims back into view instead of popping in.
+      const marginX = j.R * WRAP_MARGIN_X;
+      const marginY = j.R * WRAP_MARGIN_Y;
+      if (j.x < -marginX) this.shiftJelly(j, this.W + 2 * marginX, 0);
+      else if (j.x > this.W + marginX) this.shiftJelly(j, -this.W - 2 * marginX, 0);
+      if (j.y < -marginY) this.shiftJelly(j, 0, this.H + 2 * marginY);
+      else if (j.y > this.H + marginY) this.shiftJelly(j, 0, -this.H - 2 * marginY);
 
       // Tentacles: follow-the-leader chains with inertia, brushed aside by the pointer.
       const cs = Math.cos(j.theta);
