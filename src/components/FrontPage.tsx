@@ -51,7 +51,7 @@ function Blurb({ Mention }: { Mention: ComponentType<MentionProps> }) {
         <Mention source="hackathons">hackathon enthusiast</Mention>.
       </h1>
       <p>
-        AI Engineer Intern @ <Mention source="papiers">Papiers.ai</Mention>, building an agent powered workspace for all
+        AI Engineer Intern @ <Mention source="papiers">Papiers.ai</Mention>, building an agentic workspace for all
         of your informative media.
       </p>
       <p>
