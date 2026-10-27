@@ -114,15 +114,12 @@ const SLOTS = [
 // Hue A to hue B per jelly, so the first frame always shows both colours.
 const HUES = [0.12, 0.9, 0.3, 0.78, 0.55, 0.04];
 const TEMPO = 1;
-// Wrapping, in bell radii. A jelly leaves an edge once its trailing tentacles (up to ~3.75 radii behind the bell) are off
-// screen, and re-enters just past the opposite edge so its bell shows again almost at once. Exit lines sit beyond the
-// entry lines, so a jelly that just wrapped never wraps straight back.
-const WRAP_EXIT_SIDE = 3.2;
-const WRAP_EXIT_TOP = 4.4;
-const WRAP_EXIT_BOTTOM = 2;
-const WRAP_ENTRY = 1;
-// Sinking past the bottom, a jelly re-enters at the top tentacles first, with its bell just above the edge.
-const WRAP_ENTRY_TOP = 3.8;
+// The water wraps like a torus. Within this many bell radii of an edge (bell plus trailing tentacles) a jelly is also
+// drawn on the opposite side, so it slides off one edge and onto the other at the same moment.
+const WRAP_REACH = 4.2;
+// A click shoves the jellies its ripple reaches away from it, hardest at the centre, and turns them to swim off.
+const FLEE_SPEED = 150;
+const FLEE_TURN = 1.15;
 const LURE_SECONDS = 1.8;
 // A click's ripple: one faint ring that reaches this share of the page's short side.
 const RIPPLE_REACH = 0.24;
@@ -318,7 +315,8 @@ export class OceanEngine {
   }
 
   private respawn(j: Jelly) {
-    j.y = this.H + j.R * (1.2 + Math.random());
+    // On the bottom edge, so it rises into view (and, on the torus, trails in from the top).
+    j.y = this.H;
     j.x = this.W * (0.08 + Math.random() * 0.84);
     j.vx = 0;
     j.vy = 0;
@@ -410,12 +408,10 @@ export class OceanEngine {
       }
       j.theta += (want - j.theta) * Math.min(1, dt * (luring ? 0.9 : 0.32));
 
-      const { R, x, y } = j;
-      if (x < -R * WRAP_EXIT_SIDE) this.shiftJelly(j, this.W + R * WRAP_ENTRY - x, 0);
-      else if (x > this.W + R * WRAP_EXIT_SIDE) this.shiftJelly(j, -R * WRAP_ENTRY - x, 0);
-      // Swimming up, the bell leads: it re-enters bell first from the bottom. Sinking, it re-enters tentacles first.
-      if (y < -R * WRAP_EXIT_TOP) this.shiftJelly(j, 0, this.H + R * WRAP_ENTRY - y);
-      else if (y > this.H + R * WRAP_EXIT_BOTTOM) this.shiftJelly(j, 0, -R * WRAP_ENTRY_TOP - y);
+      if (j.x < 0) this.shiftJelly(j, this.W, 0);
+      else if (j.x > this.W) this.shiftJelly(j, -this.W, 0);
+      if (j.y < 0) this.shiftJelly(j, 0, this.H);
+      else if (j.y > this.H) this.shiftJelly(j, 0, -this.H);
 
       // Tentacles: follow-the-leader chains with inertia, brushed aside by the pointer.
       const cs = Math.cos(j.theta);
@@ -500,67 +496,83 @@ export class OceanEngine {
       octx.stroke();
     }
 
+    const { W, H } = this;
     for (const j of this.jellies) {
-      const k = this.gain * (0.54 + 0.56 * j.z);
-      const m = j.mix;
-
-      for (const t of j.tents) {
-        const p = t.pts;
-        const n = p.length;
-        for (let s = 0; s < n - 1; s += 3) {
-          const f = s / (n - 1);
-          octx.lineWidth = lerp(t.w0, t.w1, f) * j.R;
-          octx.strokeStyle = fieldColor(m, k * (t.arm ? 0.5 : 0.46) * (1 - f * 0.82), t.arm ? 0.1 * k : 0);
-          octx.beginPath();
-          octx.moveTo(p[s].x, p[s].y);
-          for (let q = s + 1; q <= Math.min(n - 1, s + 3); q++) octx.lineTo(p[q].x, p[q].y);
-          octx.stroke();
+      const reach = j.R * WRAP_REACH;
+      const xs = [0, ...(j.x < reach ? [W] : []), ...(j.x > W - reach ? [-W] : [])];
+      const ys = [0, ...(j.y < reach ? [H] : []), ...(j.y > H - reach ? [-H] : [])];
+      for (const ox of xs) {
+        for (const oy of ys) {
+          octx.save();
+          octx.translate(ox, oy);
+          this.drawJelly(j);
+          octx.restore();
         }
       }
+    }
+  }
 
-      const c = j.c;
-      const rx = j.R * (1 - 0.17 * c);
-      const ry = j.R * 0.8 * (1 + 0.1 * c);
-      octx.save();
-      octx.translate(j.x, j.y);
-      octx.rotate(j.theta);
+  private drawJelly(j: Jelly) {
+    const { octx } = this;
+    const k = this.gain * (0.54 + 0.56 * j.z);
+    const m = j.mix;
 
-      // The bell.
-      octx.beginPath();
-      octx.moveTo(-rx, 0);
-      octx.bezierCurveTo(-rx, -ry * 0.58, -rx * 0.56, -ry, 0, -ry);
-      octx.bezierCurveTo(rx * 0.56, -ry, rx, -ry * 0.58, rx, 0);
-      octx.quadraticCurveTo(0, -ry * 0.2, -rx, 0);
-      octx.closePath();
-      const g = octx.createRadialGradient(0, -ry * 0.38, rx * 0.1, 0, -ry * 0.3, rx * 1.05);
-      g.addColorStop(0, fieldColor(m, k * 0.34, 0.1 * k));
-      g.addColorStop(0.7, fieldColor(m, k * 0.42, 0.03 * k));
-      g.addColorStop(1, fieldColor(m, k * 0.66, 0.08 * k));
-      octx.fillStyle = g;
-      octx.fill();
-      octx.lineWidth = Math.max(5, j.R * 0.085);
-      octx.strokeStyle = fieldColor(m, k * 0.55, 0.2 * k);
-      octx.stroke();
-
-      // Four gonads: the moon-jelly clover.
-      octx.lineWidth = Math.max(3, j.R * 0.05);
-      octx.strokeStyle = fieldColor(m, k * 0.14, 0.52 * k);
-      for (let i = 0; i < 4; i++) {
-        const ang = Math.PI / 4 + (i * Math.PI) / 2;
+    for (const t of j.tents) {
+      const p = t.pts;
+      const n = p.length;
+      for (let s = 0; s < n - 1; s += 3) {
+        const f = s / (n - 1);
+        octx.lineWidth = lerp(t.w0, t.w1, f) * j.R;
+        octx.strokeStyle = fieldColor(m, k * (t.arm ? 0.5 : 0.46) * (1 - f * 0.82), t.arm ? 0.1 * k : 0);
         octx.beginPath();
-        octx.ellipse(Math.cos(ang) * rx * 0.26, -ry * 0.44 + Math.sin(ang) * ry * 0.2, rx * 0.14, ry * 0.12, ang, 0, Math.PI * 2);
+        octx.moveTo(p[s].x, p[s].y);
+        for (let q = s + 1; q <= Math.min(n - 1, s + 3); q++) octx.lineTo(p[q].x, p[q].y);
         octx.stroke();
       }
-      // Marginal bulbs on the rim.
-      octx.fillStyle = fieldColor(m, k * 0.4, 0.36 * k);
-      for (let i = 0; i <= 8; i++) {
-        const u = -0.95 + (1.9 * i) / 8;
-        octx.beginPath();
-        octx.arc(u * rx, -ry * 0.03 * (1 - Math.abs(u)), Math.max(2.5, j.R * 0.034), 0, Math.PI * 2);
-        octx.fill();
-      }
-      octx.restore();
     }
+
+    const c = j.c;
+    const rx = j.R * (1 - 0.17 * c);
+    const ry = j.R * 0.8 * (1 + 0.1 * c);
+    octx.save();
+    octx.translate(j.x, j.y);
+    octx.rotate(j.theta);
+
+    // The bell.
+    octx.beginPath();
+    octx.moveTo(-rx, 0);
+    octx.bezierCurveTo(-rx, -ry * 0.58, -rx * 0.56, -ry, 0, -ry);
+    octx.bezierCurveTo(rx * 0.56, -ry, rx, -ry * 0.58, rx, 0);
+    octx.quadraticCurveTo(0, -ry * 0.2, -rx, 0);
+    octx.closePath();
+    const g = octx.createRadialGradient(0, -ry * 0.38, rx * 0.1, 0, -ry * 0.3, rx * 1.05);
+    g.addColorStop(0, fieldColor(m, k * 0.34, 0.1 * k));
+    g.addColorStop(0.7, fieldColor(m, k * 0.42, 0.03 * k));
+    g.addColorStop(1, fieldColor(m, k * 0.66, 0.08 * k));
+    octx.fillStyle = g;
+    octx.fill();
+    octx.lineWidth = Math.max(5, j.R * 0.085);
+    octx.strokeStyle = fieldColor(m, k * 0.55, 0.2 * k);
+    octx.stroke();
+
+    // Four gonads: the moon-jelly clover.
+    octx.lineWidth = Math.max(3, j.R * 0.05);
+    octx.strokeStyle = fieldColor(m, k * 0.14, 0.52 * k);
+    for (let i = 0; i < 4; i++) {
+      const ang = Math.PI / 4 + (i * Math.PI) / 2;
+      octx.beginPath();
+      octx.ellipse(Math.cos(ang) * rx * 0.26, -ry * 0.44 + Math.sin(ang) * ry * 0.2, rx * 0.14, ry * 0.12, ang, 0, Math.PI * 2);
+      octx.stroke();
+    }
+    // Marginal bulbs on the rim.
+    octx.fillStyle = fieldColor(m, k * 0.4, 0.36 * k);
+    for (let i = 0; i <= 8; i++) {
+      const u = -0.95 + (1.9 * i) / 8;
+      octx.beginPath();
+      octx.arc(u * rx, -ry * 0.03 * (1 - Math.abs(u)), Math.max(2.5, j.R * 0.034), 0, Math.PI * 2);
+      octx.fill();
+    }
+    octx.restore();
   }
 
   // ── drawing: glyph grid ────────────────────────────────────────────
@@ -705,8 +717,18 @@ export class OceanEngine {
     const { x, y, inside } = this.toLocal(e);
     if (!inside) return;
     const max = Math.min(this.W, this.H) * RIPPLE_REACH;
-    // Only the jellies the ring reaches startle into a quick pulse.
-    for (const j of this.jellies) if (Math.hypot(j.x - x, j.y - y) < max + j.R) j.rush = true;
+    // Only the jellies the ring reaches startle: a quick pulse, a shove away, and a turn to swim off.
+    for (const j of this.jellies) {
+      const dx = j.x - x;
+      const dy = j.y - y;
+      const d = Math.hypot(dx, dy) || 1;
+      if (d >= max + j.R) continue;
+      const shove = FLEE_SPEED * (1 - d / (max + j.R));
+      j.vx += (dx / d) * shove;
+      j.vy += (dy / d) * shove;
+      j.theta = clamp(Math.atan2(dx, -dy), -FLEE_TURN, FLEE_TURN);
+      j.rush = true;
+    }
     this.ripples.push({ x, y, t0: this.time, dur: RIPPLE_SECONDS, max });
     this.pulses++;
     this.report();
