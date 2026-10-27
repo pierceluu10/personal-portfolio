@@ -16,29 +16,29 @@ export function TopNav() {
   const pathname = usePathname();
 
   return (
-    <nav
-      data-ocean-avoid
-      aria-label="Main"
-      className="fixed inset-x-0 top-0 z-30 flex items-center justify-center gap-8 pt-8 font-mono text-[13px] lowercase text-foreground"
-    >
-      {LINKS.map(({ label, href }) => (
-        <Link
-          key={href}
-          href={href}
-          aria-current={pathname === href ? "page" : undefined}
-          className={`${ITEM} ${pathname === href ? "opacity-100" : "opacity-50"}`}
-        >
-          {label}
-        </Link>
-      ))}
-      {/* A margin of dead space around the toggle, so a near miss doesn't send a pulse through the water behind it. */}
-      <span data-ocean-ignore className="-m-4 flex p-4">
+    <nav aria-label="Main" className="pointer-events-none fixed inset-x-0 top-0 z-30 flex justify-center pt-5">
+      {/* Always dark, with a hairline edge so it still reads against the dark theme's page. Clicks on it never reach the water. */}
+      <div
+        data-ocean-avoid
+        data-ocean-ignore
+        className="pointer-events-auto flex items-center gap-7 rounded-full border border-white/10 bg-black/85 px-6 py-2.5 font-mono text-[13px] lowercase text-white shadow-[0_8px_24px_-8px_rgb(0_0_0/0.5)] backdrop-blur-md"
+      >
+        {LINKS.map(({ label, href }) => (
+          <Link
+            key={href}
+            href={href}
+            aria-current={pathname === href ? "page" : undefined}
+            className={`${ITEM} ${pathname === href ? "opacity-100" : "opacity-50"}`}
+          >
+            {label}
+          </Link>
+        ))}
         <button type="button" onClick={toggleTheme} aria-label="Toggle theme" className={`${ITEM} opacity-50`}>
           {/* Both render and CSS picks one, so the server and client markup match before the theme is known. */}
           <Moon size={15} strokeWidth={2.25} aria-hidden className="dark:hidden" />
           <Sun size={15} strokeWidth={2.25} aria-hidden className="hidden dark:inline" />
         </button>
-      </span>
+      </div>
     </nav>
   );
 }
