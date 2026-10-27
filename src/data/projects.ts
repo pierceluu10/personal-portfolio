@@ -35,7 +35,7 @@ export const projects: Project[] = [
     longDescription:
       "agentigram is a peer-to-peer coordination layer for coding agents working on the same codebase. it watches what each agent is changing, detects conflicts before they reach git, and lets agents negotiate shared contracts across different developers' laptops. won the best sovereign tool track at hack the north, canada's largest hackathon.",
     github: "https://github.com/pierceluu10/agentigram",
-    award: { title: "Best Sovereign Tool", event: "Hack the North" },
+    award: { title: "Best Sovereign App", event: "Hack the North" },
     cardTech: ["Hyperswarm", "Electron", "Pear"],
     tech: ["hyperswarm", "hypercore", "qvac", "electron", "pear"],
   },
@@ -46,7 +46,7 @@ export const projects: Project[] = [
     longDescription:
       "litmus turns the claims you highlighted in research papers into real experiments. a langgraph orchestrator drafts each experiment and dispatches up to 4 parallel research agents, which train on cifar-10 using modal a100s and grade results with paired t-intervals across 5 seeds. openai structured outputs ground every answer in your notes, and citations to sources the model never saw are stripped. won hack the valley.",
     github: "https://github.com/pierceluu10/Litmus",
-    award: { title: "Winner", event: "Hack the Valley" },
+    award: { title: "Best Autoresearch Tool", event: "Hack the Valley" },
     cardTech: ["LangGraph", "FastAPI", "Modal"],
     tech: ["python", "langgraph", "fastapi", "openai api", "modal", "pytorch", "react", "three.js"],
   },
