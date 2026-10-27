@@ -46,20 +46,18 @@ function Quote() {
 function Blurb({ Mention }: { Mention: ComponentType<MentionProps> }) {
   return (
     <>
-      <h1>hi there!</h1>
-      <p>
-        i&apos;m pierce, second-year computer engineering student @ <Mention source="uoft">uoft</Mention> &amp;{" "}
+      <h1>
+        Hi there! I&apos;m Pierce, ECE sophomore @ <Mention source="uoft">the University of Toronto</Mention> &amp;{" "}
         <Mention source="hackathons">hackathon enthusiast</Mention>.
+      </h1>
+      <p>
+        AI Engineer Intern @ <Mention source="papiers">Papiers.ai</Mention>, building an agent powered workspace for all
+        of your informative media.
       </p>
       <p>
-        i recently completed a <Mention source="research">summer research internship</Mention> where i built
-        infrastructure for a virtual lab now securely used by 3 engineering courses @ uoft.
+        Previously, built infrastructure for a <Mention source="research">virtual engineering teaching lab</Mention> @
+        the University of Toronto.
       </p>
-      <p>
-        i&apos;m currently focused on gaining more experience building reliable backend systems, while also
-        experimenting with fun ideas for projects.
-      </p>
-      <p>outside of engineering, i also love snowboarding and i&apos;m a black belt in karate.</p>
     </>
   );
 }
