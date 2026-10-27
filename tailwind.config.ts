@@ -2,18 +2,25 @@ import type { Config } from "tailwindcss";
 
 export default {
   darkMode: "class",
-  content: [
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./src/components/**/*.{ts,tsx}", "./src/app/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        border: "var(--border)",
         background: "var(--background)",
         foreground: "var(--foreground)",
-        accent: "#1e6794",
-        "gray-mid": "#A9A9A9",
+        muted: "var(--muted)",
+      },
+      fontFamily: {
+        mono: ["var(--font-geist-mono)", "ui-monospace", "SFMono-Regular", "Menlo", "monospace"],
+      },
+      keyframes: {
+        blink: {
+          "0%, 49%": { opacity: "1" },
+          "50%, 100%": { opacity: "0" },
+        },
+      },
+      animation: {
+        blink: "blink 1.1s step-end infinite",
       },
     },
   },

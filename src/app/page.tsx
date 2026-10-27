@@ -1,23 +1,33 @@
-import { IntroSection } from "@/components/IntroSection";
-import { ProjectsSection } from "@/components/ProjectsSection";
-import { StackSection } from "@/components/StackSection";
-import { CopyEmail } from "@/components/CopyEmail";
-import { NekoCat } from "@/components/NekoCat";
+"use client";
+
+import { useEffect, useState } from "react";
+import { FrontPage } from "@/components/FrontPage";
+import { Ocean } from "@/components/ocean/Ocean";
+import type { OceanStats } from "@/components/ocean/engine";
+import { TopNav } from "@/components/TopNav";
 
 export default function HomePage() {
+  const [stats, setStats] = useState<OceanStats>({ jellies: 0, pulses: 0 });
+
+  // The home page is a single screen: no scrolling and no overscroll bounce. Restored when leaving the page.
+  useEffect(() => {
+    const root = document.documentElement;
+    const previous = { overflow: root.style.overflow, overscroll: root.style.overscrollBehavior };
+    root.style.overflow = "hidden";
+    root.style.overscrollBehavior = "none";
+    return () => {
+      root.style.overflow = previous.overflow;
+      root.style.overscrollBehavior = previous.overscroll;
+    };
+  }, []);
+
   return (
-    <main className="min-h-screen overflow-x-hidden bg-[#f7f4ed] dark:bg-[#28282B]">
-      <div className="mx-auto min-w-0 max-w-[44rem] bg-[#f7f4ed] px-4 py-9 dark:bg-[#28282B] md:px-6 md:py-7">
-        <IntroSection />
-        <NekoCat />
-        <div id="projects">
-          <ProjectsSection limit={3} />
-        </div>
-        <StackSection />
-        <p className="mt-5 text-sm text-slate-600 transition-colors hover:text-black dark:text-gray-mid dark:hover:text-white">
-          if anything here interests you, feel free to reach out via linkedin or <CopyEmail />; i&apos;m always open to new opportunities.
-        </p>
-      </div>
-    </main>
+    <div className="relative h-[100dvh] w-full overflow-hidden bg-background transition-colors duration-300">
+      <Ocean onStats={setStats} className="absolute inset-0" />
+      <TopNav />
+      <main className="relative z-20 flex h-full flex-col">
+        <FrontPage stats={stats} />
+      </main>
+    </div>
   );
 }

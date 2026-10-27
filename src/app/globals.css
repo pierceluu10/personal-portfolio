@@ -2,121 +2,60 @@
 @tailwind components;
 @tailwind utilities;
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
-}
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-
-.dotted-link {
-  text-decoration-line: underline;
-  text-decoration-style: dotted;
-  text-decoration-thickness: 1.5px;
-  text-underline-offset: 4px;
-  text-decoration-color: currentColor;
-  transition: text-decoration-color 150ms ease;
-}
-
-[data-neko],
-[data-neko-hit] {
-  transition: opacity 120ms cubic-bezier(0.23, 1, 0.32, 1);
-}
-html[data-project-modal-open] [data-neko],
-html[data-project-modal-open] [data-neko-hit],
-html[data-project-modal-open] [data-neko-tooltip] {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
-
 @layer base {
+  /* Dark text on a light page needs a heavier mix to read as clearly (both land near 4.5:1). */
   :root {
-    --background: oklch(1 0 0);
-    --foreground: oklch(0.145 0 0);
-    --card: oklch(1 0 0);
-    --card-foreground: oklch(0.145 0 0);
-    --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.145 0 0);
-    --primary: oklch(0.205 0 0);
-    --primary-foreground: oklch(0.985 0 0);
-    --secondary: oklch(0.97 0 0);
-    --secondary-foreground: oklch(0.205 0 0);
-    --muted: oklch(0.97 0 0);
-    --muted-foreground: oklch(0.556 0 0);
-    --accent: oklch(0.97 0 0);
-    --accent-foreground: oklch(0.205 0 0);
-    --destructive: oklch(0.577 0.245 27.325);
-    --border: oklch(0.922 0 0);
-    --input: oklch(0.922 0 0);
-    --ring: oklch(0.708 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
-    --radius: 0.625rem;
-    --sidebar: oklch(0.985 0 0);
-    --sidebar-foreground: oklch(0.145 0 0);
-    --sidebar-primary: oklch(0.205 0 0);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.97 0 0);
-    --sidebar-accent-foreground: oklch(0.205 0 0);
-    --sidebar-border: oklch(0.922 0 0);
-    --sidebar-ring: oklch(0.708 0 0);
+    --background: #f3f5f8;
+    --foreground: #0e131c;
+    --muted: color-mix(in srgb, var(--foreground) 64%, transparent);
+    color-scheme: light;
   }
   .dark {
-    --background: #28282B;
-    --foreground: oklch(0.985 0 0);
-    --card: oklch(0.205 0 0);
-    --card-foreground: oklch(0.985 0 0);
-    --popover: oklch(0.205 0 0);
-    --popover-foreground: oklch(0.985 0 0);
-    --primary: oklch(0.922 0 0);
-    --primary-foreground: oklch(0.205 0 0);
-    --secondary: oklch(0.269 0 0);
-    --secondary-foreground: oklch(0.985 0 0);
-    --muted: oklch(0.269 0 0);
-    --muted-foreground: oklch(0.708 0 0);
-    --accent: oklch(0.269 0 0);
-    --accent-foreground: oklch(0.985 0 0);
-    --destructive: oklch(0.704 0.191 22.216);
-    --border: oklch(1 0 0 / 10%);
-    --input: oklch(1 0 0 / 15%);
-    --ring: oklch(0.556 0 0);
-    --chart-1: oklch(0.809 0.105 251.813);
-    --chart-2: oklch(0.623 0.214 259.815);
-    --chart-3: oklch(0.546 0.245 262.881);
-    --chart-4: oklch(0.488 0.243 264.376);
-    --chart-5: oklch(0.424 0.199 265.638);
-    --sidebar: oklch(0.205 0 0);
-    --sidebar-foreground: oklch(0.985 0 0);
-    --sidebar-primary: oklch(0.488 0.243 264.376);
-    --sidebar-primary-foreground: oklch(0.985 0 0);
-    --sidebar-accent: oklch(0.269 0 0);
-    --sidebar-accent-foreground: oklch(0.985 0 0);
-    --sidebar-border: oklch(1 0 0 / 10%);
-    --sidebar-ring: oklch(0.556 0 0);
-  }
-  .theme {
-    --font-sans: var(--font-sans);
-  }
-  * {
-    border-color: var(--border);
+    --background: #04060a;
+    --foreground: #f1f4f8;
+    --muted: color-mix(in srgb, var(--foreground) 50%, transparent);
+    color-scheme: dark;
   }
   html {
-    min-height: 100vh;
     background-color: var(--background);
-    overscroll-behavior-y: none;
   }
-  html.dark {
-    background-color: #28282B;
+}
+
+@layer components {
+  /*
+   * When a mention is hovered or focused, the rest of the prose steps back so the mention is the only lit thing on
+   * the line. Dims `color`, not `opacity`: a child cannot exceed its parent's opacity.
+   */
+  .cited-prose {
+    transition: color 180ms ease;
   }
-  body {
-    min-height: 100vh;
-    @apply bg-background text-foreground;
+  .cited-prose:has(button:hover),
+  .cited-prose:has(button:focus-visible),
+  .cited-prose:has([data-cited-open="true"]) {
+    color: color-mix(in srgb, var(--foreground) 32%, transparent);
   }
-  html.dark body {
-    background-color: #28282B;
+
+  /* Inline prose link: a faint underline that firms up on hover or focus. */
+  .ink-link {
+    text-decoration-line: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 4px;
+    text-decoration-color: color-mix(in srgb, var(--foreground) 28%, transparent);
+    transition: text-decoration-color 150ms ease;
+  }
+  .ink-link:hover,
+  .ink-link:focus-visible {
+    text-decoration-color: currentColor;
+  }
+
+  /* Film grain over a project cover's gradient. */
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.32;
+    mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 }
