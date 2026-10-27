@@ -3,10 +3,11 @@
 import { useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { motion } from "motion/react";
 import { Check, Copy } from "lucide-react";
-import { Cited } from "./Cited";
+import { Cited, cardSurface } from "./Cited";
 import { Container } from "./Container";
 import type { OceanStats } from "./ocean/engine";
 import { SOURCES } from "@/data/sources";
+import { useIsLight } from "@/lib/theme";
 
 const SOCIALS = [
   { label: "github", href: "https://github.com/pierceluu10" },
@@ -68,8 +69,9 @@ function Blurb({ Mention }: { Mention: ComponentType<MentionProps> }) {
 
 const SOCIAL_LINK = `${UNDERLINE} opacity-60 hover:opacity-100 focus-visible:opacity-100`;
 
-/** A mailto link; hovering it raises a popup that copies the address. */
+/** Copies the address on click; hovering raises a card showing it. */
 function Email() {
+  const isLight = useIsLight();
   const [copied, setCopied] = useState(false);
   const reset = useRef<ReturnType<typeof setTimeout>>();
   useEffect(() => () => clearTimeout(reset.current), []);
@@ -84,18 +86,20 @@ function Email() {
   const Icon = copied ? Check : Copy;
   return (
     <span className="group/email relative inline-block">
-      <a href={`mailto:${EMAIL}`} className={SOCIAL_LINK}>
+      <button type="button" onClick={copy} aria-label={`Copy ${EMAIL}`} className={`${SOCIAL_LINK} cursor-pointer`}>
         email
-      </a>
-      {/* Bottom padding bridges the gap, so the popup stays open while the pointer travels up to it. */}
-      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 translate-y-1 pb-2 opacity-0 transition-[opacity,transform] duration-150 ease-out group-focus-within/email:pointer-events-auto group-focus-within/email:translate-y-0 group-focus-within/email:opacity-100 group-hover/email:pointer-events-auto group-hover/email:translate-y-0 group-hover/email:opacity-100">
+      </button>
+      {/* Bottom padding bridges the gap, so the card stays open while the pointer travels up to it. */}
+      <span className="pointer-events-none absolute bottom-full left-0 origin-bottom-left translate-y-1 scale-[0.98] pb-[10px] opacity-0 transition-[opacity,transform] duration-[120ms] ease-out group-focus-within/email:pointer-events-auto group-focus-within/email:translate-y-0 group-focus-within/email:scale-100 group-focus-within/email:opacity-100 group-hover/email:pointer-events-auto group-hover/email:translate-y-0 group-hover/email:scale-100 group-hover/email:opacity-100">
         <button
           type="button"
           onClick={copy}
-          aria-label={copied ? "Copied" : `Copy ${EMAIL}`}
-          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-md bg-foreground px-2.5 py-1.5 text-[12px] leading-none text-background outline-none"
+          tabIndex={-1}
+          data-ocean-ignore
+          className="flex cursor-pointer items-center gap-[8px] whitespace-nowrap rounded-[8px] px-[14px] py-[10px] text-[12px] leading-none text-foreground outline-none"
+          style={cardSurface(isLight)}
         >
-          <Icon aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+          <Icon aria-hidden="true" className="h-[14px] w-[14px] shrink-0 opacity-60" />
           <span aria-live="polite">{copied ? "copied" : EMAIL}</span>
         </button>
       </span>

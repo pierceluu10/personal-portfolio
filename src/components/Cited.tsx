@@ -40,6 +40,20 @@ function CardHeader({ source }: { source: Source }) {
   );
 }
 
+/**
+ * An elevated surface: a solid step up from the page, a hairline border, a faint top highlight, and a layered shadow
+ * instead of glass.
+ */
+export const cardSurface = (isLight: boolean) => ({
+  background: isLight
+    ? "color-mix(in srgb, var(--background) 45%, #ffffff)"
+    : "color-mix(in srgb, var(--background) 93%, var(--foreground))",
+  border: `1px solid color-mix(in srgb, var(--foreground) ${isLight ? 11 : 9}%, transparent)`,
+  boxShadow: isLight
+    ? "inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 1px 2px rgba(14, 19, 28, 0.06), 0 12px 32px -12px rgba(14, 19, 28, 0.18)"
+    : "inset 0 1px 0 color-mix(in srgb, var(--foreground) 6%, transparent), 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px -12px rgba(0, 0, 0, 0.6)",
+});
+
 const open = (target: Source) => target.href && window.open(target.href, "_blank", "noopener");
 
 /** An underlined mention whose hover card reads source / role / one line; clicking opens the source. */
@@ -116,18 +130,7 @@ export function Cited({ source, children }: { source: string; children: ReactNod
             className={`absolute bottom-full left-0 z-50 mb-[10px] flex origin-bottom-left flex-col overflow-hidden rounded-[8px] font-mono text-foreground ${
               src.href ? "cursor-pointer" : ""
             }`}
-            style={{
-              width: CARD_WIDTH,
-              // An elevated surface: a solid step up from the page, a hairline border, a faint top highlight,
-              // and a layered shadow instead of glass.
-              background: isLight
-                ? "color-mix(in srgb, var(--background) 45%, #ffffff)"
-                : "color-mix(in srgb, var(--background) 93%, var(--foreground))",
-              border: `1px solid color-mix(in srgb, var(--foreground) ${isLight ? 11 : 9}%, transparent)`,
-              boxShadow: isLight
-                ? "inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 1px 2px rgba(14, 19, 28, 0.06), 0 12px 32px -12px rgba(14, 19, 28, 0.18)"
-                : "inset 0 1px 0 color-mix(in srgb, var(--foreground) 6%, transparent), 0 1px 2px rgba(0, 0, 0, 0.3), 0 16px 40px -12px rgba(0, 0, 0, 0.6)",
-            }}
+            style={{ width: CARD_WIDTH, ...cardSurface(isLight) }}
           >
             {members ? (
               <span className="flex flex-col p-[6px]">
