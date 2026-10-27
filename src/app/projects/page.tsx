@@ -10,8 +10,8 @@ const projectHref = (project: Project) => project.url ?? project.github;
 function ProjectMeta({ project: { award, cardTech }, className }: { project: Project; className: string }) {
   if (!award) return <span className={className}>{cardTech?.join(" · ")}</span>;
   return (
-    <span className={`inline-flex items-baseline gap-1.5 ${className}`}>
-      <Trophy aria-label="Award" className="h-3 w-3 shrink-0 translate-y-[1px] self-center text-[#b08a2e] dark:text-[#d9b95e]" />
+    <span className={`inline-flex items-center gap-1.5 ${className}`}>
+      <Trophy aria-label="Award" className="h-3 w-3 shrink-0 text-[#b08a2e] dark:text-[#d9b95e]" />
       {award.title} @ {award.event}
     </span>
   );
@@ -36,7 +36,7 @@ export default function ProjectsPage() {
         {projects.map((project, i) => (
           <ExternalLink key={project.slug} project={project} className="group flex flex-col outline-none focus-visible:underline">
             <ProjectCover project={project} priority={i < 2} className="w-full" />
-            <div className="mt-3 flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <div className="mt-3 flex flex-wrap items-center gap-x-3 gap-y-1">
               <h2 className="text-[15px]">{project.title}</h2>
               <ProjectMeta project={project} className="font-mono text-[12px] text-muted" />
             </div>
