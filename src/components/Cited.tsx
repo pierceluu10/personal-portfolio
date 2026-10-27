@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState, type ReactNode } from "react";
+import Image from "next/image";
 import { AnimatePresence, motion } from "motion/react";
 import { useIsLight } from "@/lib/theme";
 import { SOURCES, type Source } from "@/data/sources";
@@ -10,8 +11,9 @@ const CLOSE_DELAY = 30;
 const CARD_WIDTH = 340; // wide enough that the longest source name clears the date
 const MARK_SIZE = 16;
 
-/** The source's initial on a faint plate. */
-function Mark({ name }: { name: string }) {
+/** The source's logo, or its initial on a faint plate. */
+function Mark({ name, logo }: { name: string; logo?: string }) {
+  if (logo) return <Image src={logo} alt="" width={MARK_SIZE} height={MARK_SIZE} unoptimized className="shrink-0 rounded-[4px]" />;
   return (
     <span
       className="flex shrink-0 items-center justify-center rounded-[4px]"
@@ -31,7 +33,7 @@ function Mark({ name }: { name: string }) {
 function CardHeader({ source }: { source: Source }) {
   return (
     <span className="flex items-center gap-[8px] text-[12px] leading-none">
-      <Mark name={source.name} />
+      <Mark name={source.name} logo={source.logo} />
       <span className="truncate opacity-60">{source.name}</span>
       {source.dates && <span className="ml-auto shrink-0 pl-2 tabular-nums opacity-40">{source.dates}</span>}
     </span>
@@ -145,7 +147,7 @@ export function Cited({ source, children }: { source: string; children: ReactNod
               <span className="flex flex-col gap-[6px] px-[14px] py-[12px]">
                 <CardHeader source={src} />
                 <span className="mt-[4px] text-[13px] leading-[18px]">{src.role}</span>
-                <span className="line-clamp-3 text-[12px] leading-[18px] opacity-60">{src.summary}</span>
+                {src.summary && <span className="line-clamp-3 text-[12px] leading-[18px] opacity-60">{src.summary}</span>}
               </span>
             )}
 
