@@ -39,13 +39,17 @@ function DesktopStrip() {
     let raf = 0;
 
     const glide = () => {
-      const gap = target - strip.scrollLeft;
-      if (Math.abs(gap) < 0.5) {
+      const before = strip.scrollLeft;
+      const gap = target - before;
+      if (Math.abs(gap) >= 1) strip.scrollLeft = before + gap * GLIDE;
+      // Scroll positions snap to device pixels, so a small step can land nowhere; finish there instead of looping
+      // forever and dragging any native swipe back to a stale target.
+      if (strip.scrollLeft === before) {
         strip.scrollLeft = target;
+        target = strip.scrollLeft;
         raf = 0;
         return;
       }
-      strip.scrollLeft += gap * GLIDE;
       raf = requestAnimationFrame(glide);
     };
 

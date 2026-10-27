@@ -93,7 +93,7 @@ export function FrontPage({ stats }: { stats: OceanStats }) {
     <>
       <Container
         as="header"
-        className="relative flex h-full flex-col justify-end gap-10 bg-transparent pb-32 pt-32 font-mono max-lg:hidden [@media(max-height:720px)]:gap-6 [@media(max-height:720px)]:pb-12 [@media(max-height:720px)]:pt-20"
+        className="relative flex h-full flex-col justify-end gap-10 bg-transparent pb-32 pt-32 font-mono max-lg:hidden lg:pl-[18.5vw] lg:pr-[16vw] [@media(max-height:720px)]:gap-6 [@media(max-height:720px)]:pb-12 [@media(max-height:720px)]:pt-20"
       >
         {stats.jellies > 0 && (
           <div
@@ -118,7 +118,7 @@ export function FrontPage({ stats }: { stats: OceanStats }) {
         </motion.blockquote>
         <motion.div
           data-ocean-avoid
-          className="cited-prose max-w-[54rem] text-[15px] leading-[max(22px,3vh)]"
+          className="cited-prose max-w-[58.5rem] text-[15px] leading-[max(22px,3vh)]"
           {...fadeIn(1, 0.2)}
         >
           <Blurb Mention={Cited} />
