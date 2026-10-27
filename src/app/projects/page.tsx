@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { Trophy } from "lucide-react";
 import { Container } from "@/components/Container";
 import { ProjectCover } from "@/components/ProjectCover";
 import { TopNav } from "@/components/TopNav";
@@ -11,7 +12,16 @@ const DESKTOP_QUERY = "(min-width: 1024px)"; // Tailwind's `lg`, where the strip
 const LINE_HEIGHT_PX = 16; // a wheel that scrolls in lines (deltaMode 1) moves this far per line
 
 const projectHref = (project: Project) => project.url ?? project.github;
-const projectMeta = ({ award, cardTech }: Project) => (award ? `${award.title} @ ${award.event}` : cardTech?.join(" · "));
+/** The award, behind a trophy, for winners; the stack for everything else. */
+function ProjectMeta({ project: { award, cardTech }, className }: { project: Project; className: string }) {
+  if (!award) return <span className={className}>{cardTech?.join(" · ")}</span>;
+  return (
+    <span className={`inline-flex items-baseline gap-1.5 ${className}`}>
+      <Trophy aria-label="Award" className="h-3 w-3 shrink-0 translate-y-[1px] self-center text-[#b08a2e] dark:text-[#d9b95e]" />
+      {award.title} @ {award.event}
+    </span>
+  );
+}
 
 export default function ProjectsPage() {
   return (
@@ -113,7 +123,7 @@ function StripTile({ project, priority }: { project: Project; priority: boolean 
       </div>
       <div className="mt-3 flex items-baseline gap-3">
         <span className="whitespace-nowrap text-[15px]">{project.title}</span>
-        <span className="whitespace-nowrap font-mono text-[12px] text-muted">{projectMeta(project)}</span>
+        <ProjectMeta project={project} className="whitespace-nowrap font-mono text-[12px] text-muted" />
       </div>
       <p className="mt-1 text-[14px] leading-[1.5] text-muted">{project.description}</p>
     </ExternalLink>
@@ -128,7 +138,7 @@ function MobileList() {
           <ProjectCover project={project} priority={i === 0} className="w-full rounded-2xl" />
           <div className="mt-4 flex flex-wrap items-baseline gap-x-3 gap-y-1">
             <h2 className="text-[17px]">{project.title}</h2>
-            <span className="font-mono text-[12px] text-muted">{projectMeta(project)}</span>
+            <ProjectMeta project={project} className="font-mono text-[12px] text-muted" />
           </div>
           <p className="mt-1 text-[15px] leading-[1.5] text-muted">{project.description}</p>
         </ExternalLink>

@@ -2,26 +2,22 @@ import type { StaticImageData } from "next/image";
 import type { Project } from "./projects";
 import contribeauBackgroundImage from "@/bgs/contribeau.png";
 import vertexBackgroundImage from "@/bgs/vertex.jpg";
-import swagramsBackgroundImage from "@/bgs/swagrams.jpg";
 import haggleBackgroundImage from "@/bgs/haggle.png";
 import siloLabsBackgroundImage from "@/bgs/silo-labs.jpg";
 import atrynBackgroundImage from "@/bgs/atryn.jpg";
 import fincoBackgroundImage from "@/bgs/finco.jpg";
 import agentigramBackgroundImage from "@/bgs/agentigram.jpg";
-import questrBackgroundImage from "@/bgs/questr.jpg";
 import litmusBackgroundImage from "@/bgs/litmus.jpg";
 import reposistoryBackgroundImage from "@/bgs/reposistory.jpg";
 
 export const projectPreviewImages: Partial<Record<Project["slug"], StaticImageData>> = {
   contribeau: contribeauBackgroundImage,
   vertex: vertexBackgroundImage,
-  swagrams: swagramsBackgroundImage,
   haggle: haggleBackgroundImage,
   "silo-labs": siloLabsBackgroundImage,
   atryn: atrynBackgroundImage,
   finco: fincoBackgroundImage,
   agentigram: agentigramBackgroundImage,
-  questr: questrBackgroundImage,
   litmus: litmusBackgroundImage,
   reposistory: reposistoryBackgroundImage,
 };
@@ -36,11 +32,9 @@ export const projectCovers: Record<Project["slug"], string> = {
   reposistory: [glow("62% 38%", "#2f9e4f", "55%"), glow("0% 100%", "#0b3d1d", "60%"), "#0a2412"].join(", "),
   traffer: [glow("0% 0%", "#6c2bd9", "55%"), glow("100% 0%", "#ff7a3d", "50%"), glow("72% 100%", "#2a3bd8", "55%"), glow("15% 100%", "#e0447a", "50%"), "#3a1b8a"].join(", "),
   haggle: [glow("20% 85%", "#6f8f6a", "60%"), glow("90% 10%", "#bfb79a", "45%"), "#1c221b"].join(", "),
-  swagrams: [glow("10% 15%", "#8b3dff", "55%"), glow("90% 95%", "#ff5fa2", "55%"), "#1a0f2e"].join(", "),
   contribeau: [glow("10% 95%", "#1db954", "55%"), glow("95% 5%", "#0f5a2c", "55%"), "#07140c"].join(", "),
   teddytalk: [glow("25% 90%", "#e2557a", "60%"), glow("90% 10%", "#ffb38a", "50%"), "#2a0f17"].join(", "),
   vertex: [glow("15% 10%", "#3b5bff", "58%"), glow("90% 95%", "#7ad0ff", "50%"), "#0b1230"].join(", "),
   finco: [glow("10% 90%", "#14b8a6", "55%"), glow("90% 10%", "#2563eb", "55%"), "#08161c"].join(", "),
   atryn: [glow("80% 15%", "#1e40af", "60%"), glow("10% 100%", "#f59e0b", "45%"), "#0a1024"].join(", "),
-  questr: [glow("15% 90%", "#f59e0b", "50%"), glow("85% 10%", "#7c3aed", "58%"), "#1b1030"].join(", "),
 };
