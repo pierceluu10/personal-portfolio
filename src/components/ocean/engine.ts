@@ -114,9 +114,15 @@ const SLOTS = [
 // Hue A to hue B per jelly, so the first frame always shows both colours.
 const HUES = [0.12, 0.9, 0.3, 0.78, 0.55, 0.04];
 const TEMPO = 1;
-// How far past an edge, in bell radii, a jelly must drift before it wraps; tentacles trail up to ~3.75 radii behind.
-const WRAP_MARGIN_X = 3.2;
-const WRAP_MARGIN_Y = 4.4;
+// Wrapping, in bell radii. A jelly leaves an edge once its trailing tentacles (up to ~3.75 radii behind the bell) are off
+// screen, and re-enters just past the opposite edge so its bell shows again almost at once. Exit lines sit beyond the
+// entry lines, so a jelly that just wrapped never wraps straight back.
+const WRAP_EXIT_SIDE = 3.2;
+const WRAP_EXIT_TOP = 4.4;
+const WRAP_EXIT_BOTTOM = 2;
+const WRAP_ENTRY = 1;
+// Sinking past the bottom, a jelly re-enters at the top tentacles first, with its bell just above the edge.
+const WRAP_ENTRY_TOP = 3.8;
 const LURE_SECONDS = 1.8;
 // A click's ripple: one faint ring that reaches this share of the page's short side.
 const RIPPLE_REACH = 0.24;
@@ -404,14 +410,12 @@ export class OceanEngine {
       }
       j.theta += (want - j.theta) * Math.min(1, dt * (luring ? 0.9 : 0.32));
 
-      // Wrap once the bell and its trailing tentacles are fully off one edge, landing just as far past the opposite edge
-      // so it swims back into view instead of popping in.
-      const marginX = j.R * WRAP_MARGIN_X;
-      const marginY = j.R * WRAP_MARGIN_Y;
-      if (j.x < -marginX) this.shiftJelly(j, this.W + 2 * marginX, 0);
-      else if (j.x > this.W + marginX) this.shiftJelly(j, -this.W - 2 * marginX, 0);
-      if (j.y < -marginY) this.shiftJelly(j, 0, this.H + 2 * marginY);
-      else if (j.y > this.H + marginY) this.shiftJelly(j, 0, -this.H - 2 * marginY);
+      const { R, x, y } = j;
+      if (x < -R * WRAP_EXIT_SIDE) this.shiftJelly(j, this.W + R * WRAP_ENTRY - x, 0);
+      else if (x > this.W + R * WRAP_EXIT_SIDE) this.shiftJelly(j, -R * WRAP_ENTRY - x, 0);
+      // Swimming up, the bell leads: it re-enters bell first from the bottom. Sinking, it re-enters tentacles first.
+      if (y < -R * WRAP_EXIT_TOP) this.shiftJelly(j, 0, this.H + R * WRAP_ENTRY - y);
+      else if (y > this.H + R * WRAP_EXIT_BOTTOM) this.shiftJelly(j, 0, -R * WRAP_ENTRY_TOP - y);
 
       // Tentacles: follow-the-leader chains with inertia, brushed aside by the pointer.
       const cs = Math.cos(j.theta);
