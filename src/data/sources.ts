@@ -37,7 +37,7 @@ export const SOURCES: Record<string, Source> = {
     name: "Papiers.ai",
     role: "AI Engineer Intern",
     dates: "present",
-    summary: "An agent powered workspace for all of your informative media.",
+    summary: "An agentic workspace for all of your informative media.",
     href: "https://papiers.ai/",
   },
   research: {
