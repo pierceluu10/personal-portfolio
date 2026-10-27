@@ -325,6 +325,16 @@ export class OceanEngine {
     this.resetTentacles(j);
   }
 
+  // The glyph grid rounds up to whole cells, so it runs a little past the page; the water wraps at the grid's edge, or
+  // the overhang would show a sliver of the jelly's other copy.
+  private get spanX() {
+    return this.cols * this.cw;
+  }
+
+  private get spanY() {
+    return this.rows * this.ch;
+  }
+
   private shiftJelly(j: Jelly, dx: number, dy: number) {
     j.x += dx;
     j.y += dy;
@@ -408,10 +418,11 @@ export class OceanEngine {
       }
       j.theta += (want - j.theta) * Math.min(1, dt * (luring ? 0.9 : 0.32));
 
-      if (j.x < 0) this.shiftJelly(j, this.W, 0);
-      else if (j.x > this.W) this.shiftJelly(j, -this.W, 0);
-      if (j.y < 0) this.shiftJelly(j, 0, this.H);
-      else if (j.y > this.H) this.shiftJelly(j, 0, -this.H);
+      const { spanX, spanY } = this;
+      if (j.x < 0) this.shiftJelly(j, spanX, 0);
+      else if (j.x > spanX) this.shiftJelly(j, -spanX, 0);
+      if (j.y < 0) this.shiftJelly(j, 0, spanY);
+      else if (j.y > spanY) this.shiftJelly(j, 0, -spanY);
 
       // Tentacles: follow-the-leader chains with inertia, brushed aside by the pointer.
       const cs = Math.cos(j.theta);
@@ -496,7 +507,7 @@ export class OceanEngine {
       octx.stroke();
     }
 
-    const { W, H } = this;
+    const { spanX: W, spanY: H } = this;
     for (const j of this.jellies) {
       const reach = j.R * WRAP_REACH;
       const xs = [0, ...(j.x < reach ? [W] : []), ...(j.x > W - reach ? [-W] : [])];
