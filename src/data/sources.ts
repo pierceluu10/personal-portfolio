@@ -40,8 +40,7 @@ export const SOURCES: Record<string, Source> = {
     name: "University of Toronto",
     logo: UOFT_LOGO,
     role: "BASc in Computer Engineering",
-    dates: "sophomore",
-    href: "https://www.utoronto.ca/",
+    dates: "second year · expected 2029",
   },
   papiers: {
     key: "papiers",

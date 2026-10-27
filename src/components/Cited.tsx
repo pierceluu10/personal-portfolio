@@ -8,7 +8,7 @@ import { SOURCES, type Source } from "@/data/sources";
 
 const OPEN_DELAY = 55;
 const CLOSE_DELAY = 30;
-const CARD_WIDTH = 340; // wide enough that the longest source name clears the date
+const CARD_WIDTH = 440; // wide enough that the longest source name clears the date
 const MARK_SIZE = 16;
 
 /** The source's logo, or its initial on a faint plate. */
@@ -78,7 +78,7 @@ export function Cited({ source, children }: { source: string; children: ReactNod
   const members = src.group;
   // A group's mention lands on its first member; its card lets you pick one.
   const target = members?.[0] ?? src;
-  const footer = members ? "open a project" : src.href ? "open site" : undefined;
+  const footer = members ? "click on a project" : src.href ? "open site" : undefined;
 
   return (
     <span

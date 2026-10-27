@@ -1,7 +1,8 @@
 "use client";
 
-import type { ComponentType, ReactNode } from "react";
+import { useEffect, useRef, useState, type ComponentType, type ReactNode } from "react";
 import { motion } from "motion/react";
+import { Check, Copy } from "lucide-react";
 import { Cited } from "./Cited";
 import { Container } from "./Container";
 import type { OceanStats } from "./ocean/engine";
@@ -11,6 +12,9 @@ const SOCIALS = [
   { label: "github", href: "https://github.com/pierceluu10" },
   { label: "linkedin", href: "https://www.linkedin.com/in/pierceluu/" },
 ];
+
+const EMAIL = "pierceluu10@gmail.com";
+const COPIED_MS = 1600;
 
 const UNDERLINE =
   "underline decoration-[color-mix(in_srgb,var(--foreground)_35%,transparent)] decoration-1 underline-offset-[5px] outline-none transition-opacity duration-150 hover:decoration-foreground focus-visible:decoration-foreground";
@@ -62,22 +66,55 @@ function Blurb({ Mention }: { Mention: ComponentType<MentionProps> }) {
   );
 }
 
+const SOCIAL_LINK = `${UNDERLINE} opacity-60 hover:opacity-100 focus-visible:opacity-100`;
+
+/** A mailto link; hovering it raises a popup that copies the address. */
+function Email() {
+  const [copied, setCopied] = useState(false);
+  const reset = useRef<ReturnType<typeof setTimeout>>();
+  useEffect(() => () => clearTimeout(reset.current), []);
+
+  const copy = async () => {
+    await navigator.clipboard.writeText(EMAIL);
+    setCopied(true);
+    clearTimeout(reset.current);
+    reset.current = setTimeout(() => setCopied(false), COPIED_MS);
+  };
+
+  const Icon = copied ? Check : Copy;
+  return (
+    <span className="group/email relative inline-block">
+      <a href={`mailto:${EMAIL}`} className={SOCIAL_LINK}>
+        email
+      </a>
+      {/* Bottom padding bridges the gap, so the popup stays open while the pointer travels up to it. */}
+      <span className="pointer-events-none absolute bottom-full left-1/2 -translate-x-1/2 translate-y-1 pb-2 opacity-0 transition-[opacity,transform] duration-150 ease-out group-focus-within/email:pointer-events-auto group-focus-within/email:translate-y-0 group-focus-within/email:opacity-100 group-hover/email:pointer-events-auto group-hover/email:translate-y-0 group-hover/email:opacity-100">
+        <button
+          type="button"
+          onClick={copy}
+          aria-label={copied ? "Copied" : `Copy ${EMAIL}`}
+          className="flex cursor-pointer items-center gap-2 whitespace-nowrap rounded-md bg-foreground px-2.5 py-1.5 text-[12px] leading-none text-background outline-none"
+        >
+          <Icon aria-hidden="true" className="h-3.5 w-3.5 shrink-0" />
+          <span aria-live="polite">{copied ? "copied" : EMAIL}</span>
+        </button>
+      </span>
+    </span>
+  );
+}
+
 function Socials({ className }: { className?: string }) {
   return (
     <p className={className}>
-      {SOCIALS.map(({ label, href }, i) => (
+      {SOCIALS.map(({ label, href }) => (
         <span key={label}>
-          {i > 0 && <span className="opacity-40"> / </span>}
-          <a
-            href={href}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={`${UNDERLINE} opacity-60 hover:opacity-100 focus-visible:opacity-100`}
-          >
+          <a href={href} target="_blank" rel="noopener noreferrer" className={SOCIAL_LINK}>
             {label}
           </a>
+          <span className="opacity-40"> / </span>
         </span>
       ))}
+      <Email />
     </p>
   );
 }
